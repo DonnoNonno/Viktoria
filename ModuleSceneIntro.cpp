@@ -52,13 +52,43 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
 
+	//wall
 	PhysBody* c1 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
 	PhysBody* c2 = App->physics->CreateRectangle(71, 350, 10, 700, STATIC);
 	PhysBody* c3 = App->physics->CreateRectangle(497, 350, 10, 700, STATIC);
 	PhysBody* c4 = App->physics->CreateRectangle(462, 455, 9, 400, STATIC);
 	PhysBody* c5 = App->physics->CreateRectangle(96, 450, 9, 300, STATIC);
 	PhysBody* c6 = App->physics->CreateRectangle(125, 170, 9, 250, STATIC);
+	PhysBody* c7 = App->physics->CreateRectangle(132, 411, 9, 130, STATIC);
+	PhysBody* c8 = App->physics->CreateRectangle(422, 411, 9, 130, STATIC);
+	PhysBody* c9 = App->physics->CreateRectangle(387, 411, 9, 74, STATIC);
+	PhysBody* c10 = App->physics->CreateRectangle(167, 410, 9, 74, STATIC);
+	PhysBody* c11 = App->physics->CreateRectangle(420, 207, 9, 55, STATIC);
+	PhysBody* c12 = App->physics->CreateRectangle(284, 21, 420, 9, STATIC);
+	PhysBody* c13 = App->physics->CreateRectangle(168, 140, 3, 32, STATIC);
+	PhysBody* c14 = App->physics->CreateRectangle(202, 140, 3, 32, STATIC);
+	PhysBody* c15 = App->physics->CreateRectangle(227, 140, 3, 32, STATIC);
+	PhysBody* c16 = App->physics->CreateRectangle(262, 140, 3, 32, STATIC);
+	PhysBody* c17 = App->physics->CreateRectangle(290, 140, 3, 32, STATIC);
+	PhysBody* c18 = App->physics->CreateRectangle(324, 140, 3, 32, STATIC);
+	PhysBody* c19 = App->physics->CreateRectangle(350, 140, 3, 32, STATIC);
+	PhysBody* c20 = App->physics->CreateRectangle(385, 140, 3, 32, STATIC);
+	PhysBody* c21 = App->physics->CreateRectangle(185, 158, 37, 3, STATIC);
+	PhysBody* c22 = App->physics->CreateRectangle(244, 158, 38, 3, STATIC);
+	PhysBody* c23 = App->physics->CreateRectangle(307, 158, 37, 3, STATIC);
+	PhysBody* c24 = App->physics->CreateRectangle(368, 158, 38, 3, STATIC);
+	PhysBody* c25 = App->physics->CreateRectangle(468, 574, 10, 3, STATIC);
+	PhysBody* c26 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
 
+	//points ball
+	PhysBody* c27 = App->physics->CreateCircle(185, 128, 12, STATIC);
+	PhysBody* c28 = App->physics->CreateCircle(244, 128, 12, STATIC);
+	PhysBody* c29 = App->physics->CreateCircle(307, 128, 12, STATIC);
+	PhysBody* c30 = App->physics->CreateCircle(368, 128, 12, STATIC);
+	PhysBody* c31 = App->physics->CreateCircle(185, 209, 12, STATIC);
+	PhysBody* c32 = App->physics->CreateCircle(368, 209, 12, STATIC);
+
+	//bounce
 
 	return ret;
 }
@@ -86,7 +116,7 @@ update_status ModuleSceneIntro::Update()
 	// If user presses 1, create a new circle object
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8, DYNAMIC));
 
 		// Add this module (ModuleSceneIntro) as a "listener" interested in collisions with circles.
 		// If Box2D detects a collision with this last generated circle, it will automatically callback the function ModulePhysics::BeginContact()
