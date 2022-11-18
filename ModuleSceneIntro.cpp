@@ -53,10 +53,11 @@ bool ModuleSceneIntro::Start()
 	lower_ground_sensor->listener = this;
 
 	PhysBody* c1 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
-	PhysBody* c2 = App->physics->CreateRectangle(4, 690, 130, 300, STATIC);
-	PhysBody* c3 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
-	PhysBody* c4 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
-	PhysBody* c5 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
+	PhysBody* c2 = App->physics->CreateRectangle(71, 350, 10, 700, STATIC);
+	PhysBody* c3 = App->physics->CreateRectangle(497, 350, 10, 700, STATIC);
+	PhysBody* c4 = App->physics->CreateRectangle(462, 455, 9, 400, STATIC);
+	PhysBody* c5 = App->physics->CreateRectangle(96, 450, 9, 300, STATIC);
+	PhysBody* c6 = App->physics->CreateRectangle(125, 170, 9, 250, STATIC);
 
 
 	return ret;
