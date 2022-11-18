@@ -24,6 +24,7 @@ public:
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
 	ModulePhysics* physics;
+	
 
 private:
 
@@ -37,8 +38,12 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+	
 
 private:
 
 	void AddModule(Module* mod);
+	
+
 };
+

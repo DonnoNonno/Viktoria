@@ -11,7 +11,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	circle = box = rick = NULL;
+	mapa = circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -30,6 +30,15 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	// Load textures
+	mapa = App->textures->Load("pinball/mapa.png");
+	point = App->textures->Load("pinball/point.png");
+	ball = App->textures->Load("pinball/ball.png");
+	bounce = App->textures->Load("pinball/bounce.png");
+	palancaleft = App->textures->Load("pinball/palancaleft.png");
+	palancaright = App->textures->Load("pinball/palancaright.png");
+	stick = App->textures->Load("pinball/stick.png");
+	wood=App->textures->Load("pinball/wood.png");
+
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
@@ -42,6 +51,13 @@ bool ModuleSceneIntro::Start()
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
+
+	PhysBody* c1 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
+	PhysBody* c2 = App->physics->CreateRectangle(4, 690, 130, 300, STATIC);
+	PhysBody* c3 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
+	PhysBody* c4 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
+	PhysBody* c5 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
+
 
 	return ret;
 }
@@ -79,7 +95,7 @@ update_status ModuleSceneIntro::Update()
 	// If user presses 2, create a new box object
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
+		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50,DYNAMIC));
 	}
 
 	// If user presses 3, create a new RickHead object
@@ -138,6 +154,19 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
+	App->renderer->Blit(mapa, 0, 0);
+	App->renderer->Blit(point, 167, 110);
+	App->renderer->Blit(point, 227, 110);
+	App->renderer->Blit(point, 289, 110);
+	App->renderer->Blit(point, 349, 110);
+	App->renderer->Blit(point, 349, 190);
+	App->renderer->Blit(point, 167, 190);
+	App->renderer->Blit(bounce, 177, 390);
+	App->renderer->Blit(ball, 472, 540);
+	App->renderer->Blit(stick, 475, 600);
+	App->renderer->Blit(wood, 0, 624);
+	App->renderer->Blit(palancaleft, 220, 523);
+	App->renderer->Blit(palancaright, 290, 523);
 
 	// Circles
 	p2List_item<PhysBody*>* c = circles.getFirst();
@@ -150,6 +179,7 @@ update_status ModuleSceneIntro::Update()
 		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
 
+		
 		c = c->next;
 	}
 

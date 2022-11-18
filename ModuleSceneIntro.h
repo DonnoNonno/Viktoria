@@ -23,6 +23,7 @@ public:
 public:
 
 	// Lists of physics objects
+
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
@@ -32,6 +33,15 @@ public:
 	bool sensed;
 
 	// Textures
+	SDL_Texture* stick;
+	SDL_Texture* palancaright;
+	SDL_Texture* palancaleft;
+	SDL_Texture* bounce;
+	SDL_Texture* ball;
+	SDL_Texture* point;
+	SDL_Texture* mapa;
+	SDL_Texture* wood;
+
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;

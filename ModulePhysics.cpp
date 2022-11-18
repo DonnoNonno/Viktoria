@@ -36,6 +36,7 @@ bool ModulePhysics::Start()
 	// Create a new World
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 
+
 	// Set this module as a listener for contacts
 	world->SetContactListener(this);
 
@@ -305,12 +306,13 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height,bodyType type)
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	if (type == STATIC) body.type = b2_staticBody;
 
 	// Add BODY to the world
 	b2Body* b = world->CreateBody(&body);

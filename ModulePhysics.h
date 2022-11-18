@@ -28,6 +28,14 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
+
+	
+};
+
+enum bodyType {
+	DYNAMIC,
+	STATIC,
+	KINEMATIC
 };
 
 // Module --------------------------------------
@@ -50,7 +58,7 @@ public:
 
 	// Create basic physics objects
 	PhysBody* CreateCircle(int x, int y, int radius);
-	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, bodyType type);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 
