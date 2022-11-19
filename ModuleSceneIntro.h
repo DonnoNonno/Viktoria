@@ -18,6 +18,7 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void Coll_Map(); //Funcion para generar colisiones diagonals y curvas
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 public:

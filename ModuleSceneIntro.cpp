@@ -29,6 +29,9 @@ bool ModuleSceneIntro::Start()
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	//Inicia otras colisiones
+	Coll_Map();
+
 	// Load textures
 	mapa = App->textures->Load("pinball/mapa.png");
 	point = App->textures->Load("pinball/point.png");
@@ -143,10 +146,10 @@ update_status ModuleSceneIntro::Update()
 	//}
 
 	// If user presses 1, create a new circle object
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+	/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8, DYNAMIC));
 		circles.getLast()->data->listener = this;
-	}
+	}*/
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -156,129 +159,6 @@ update_status ModuleSceneIntro::Update()
 		// If Box2D detects a collision with this last generated circle, it will automatically callback the function ModulePhysics::BeginContact()
 		circles.getLast()->data->listener = this;
 	}
-
-	//// If user presses 2, create a new box object
-	//if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	//{
-	//	boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50,DYNAMIC));
-	//}
-
-	//// If user presses 3, create a new RickHead object
-	//if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	//{
-	//	// Pivot 0, 0
-	//	int rick_head[64] = {
-	//		14, 36,
-	//		42, 40,
-	//		40, 0,
-	//		75, 30,
-	//		88, 4,
-	//		94, 39,
-	//		111, 36,
-	//		104, 58,
-	//		107, 62,
-	//		117, 67,
-	//		109, 73,
-	//		110, 85,
-	//		106, 91,
-	//		109, 99,
-	//		103, 104,
-	//		100, 115,
-	//		106, 121,
-	//		103, 125,
-	//		98, 126,
-	//		95, 137,
-	//		83, 147,
-	//		67, 147,
-	//		53, 140,
-	//		46, 132,
-	//		34, 136,
-	//		38, 126,
-	//		23, 123,
-	//		30, 114,
-	//		10, 102,
-	//		29, 90,
-	//		0, 75,
-	//		30, 62
-	//	};
-	int diagonal01[8] = {
-		0, 0,
-		80, 45,
-		76, 54,
-		-4, 9
-	};
-
-	int diagonal02[8] = {
-		0, 0,
-		-80, 45,
-		-76, 54,
-		4, 9
-	};
-
-	int diagonal03[8] = {
-		0, 0,
-		50, 27,
-		46, 36,
-		-4, 9
-	};
-
-	int diagonal04[8] = {
-		0, 0,
-		-50, 28,
-		-46, 37,
-		4, 9
-	};
-
-	int diagonal05[8] = {
-		0, 0,
-		120, 65,
-		115, 75,
-		-4, 9
-	};
-
-	int diagonal06[8] = {
-		0, 0,
-		-120, 65,
-		-115, 75,
-		4, 9
-	};
-
-	int diagonal07[12] = {
-		0, 0,
-		-35, 32,
-		-31, 41,
-		-1, 11,
-		9, 22,
-		16, 14
-	};
-
-	int diagonal08[8] = {
-		0, 0,
-		40, 38,
-		31, 45,
-		-4, 9
-	};
-
-	int diagonal09[12] = {
-		0, 0,
-		40, 22,
-		33, 25,
-		0, 9,
-		-33, 25,
-		-40, 22
-	};
-
-
-	chains.add(App->physics->CreateChain(130, 470, diagonal01, 8));
-	chains.add(App->physics->CreateChain(422, 470, diagonal02, 8));
-	chains.add(App->physics->CreateChain(166, 439, diagonal03, 8));
-	chains.add(App->physics->CreateChain(385, 439, diagonal04, 8));
-	chains.add(App->physics->CreateChain(94, 520, diagonal05, 8));
-	chains.add(App->physics->CreateChain(460, 520, diagonal06, 8));
-	chains.add(App->physics->CreateChain(127, 289, diagonal07, 12));
-	chains.add(App->physics->CreateChain(385, 140, diagonal08, 8));
-	chains.add(App->physics->CreateChain(278, 205, diagonal09, 12));
-	
 
 	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
 	//}
@@ -387,6 +267,95 @@ update_status ModuleSceneIntro::Update()
 
 	// Keep playing
 	return UPDATE_CONTINUE;
+}
+
+//Chain Collisions. Funcion para generar colisiones diagonals y curvas
+void ModuleSceneIntro::Coll_Map() {
+
+	p2List_item<PhysBody*>* temp = chains.getFirst();
+	while (temp != NULL) {
+		b2Body* body = temp->data->body;
+		temp->data->body->GetWorld()->DestroyBody(body);
+		temp = temp->next;
+	}
+	chains.clear();
+
+	int diagonal01[8] = {
+		0, 0,
+		80, 45,
+		76, 54,
+		-4, 9
+	};
+
+	int diagonal02[8] = {
+		0, 0,
+		-80, 45,
+		-76, 54,
+		4, 9
+	};
+
+	int diagonal03[8] = {
+		0, 0,
+		50, 27,
+		46, 36,
+		-4, 9
+	};
+
+	int diagonal04[8] = {
+		0, 0,
+		-50, 28,
+		-46, 37,
+		4, 9
+	};
+
+	int diagonal05[8] = {
+		0, 0,
+		120, 65,
+		115, 75,
+		-4, 9
+	};
+
+	int diagonal06[8] = {
+		0, 0,
+		-120, 65,
+		-115, 75,
+		4, 9
+	};
+
+	int diagonal07[12] = {
+		0, 0,
+		-35, 32,
+		-31, 41,
+		-1, 11,
+		9, 22,
+		16, 14
+	};
+
+	int diagonal08[8] = {
+		0, 0,
+		40, 38,
+		31, 45,
+		-4, 9
+	};
+
+	int diagonal09[12] = {
+		0, 0,
+		40, 22,
+		33, 25,
+		0, 9,
+		-33, 25,
+		-40, 22
+	};
+
+	chains.add(App->physics->CreateChain(130, 470, diagonal01, 8));
+	chains.add(App->physics->CreateChain(422, 470, diagonal02, 8));
+	chains.add(App->physics->CreateChain(166, 439, diagonal03, 8));
+	chains.add(App->physics->CreateChain(385, 439, diagonal04, 8));
+	chains.add(App->physics->CreateChain(94, 520, diagonal05, 8));
+	chains.add(App->physics->CreateChain(460, 520, diagonal06, 8));
+	chains.add(App->physics->CreateChain(127, 289, diagonal07, 12));
+	chains.add(App->physics->CreateChain(385, 140, diagonal08, 8));
+	chains.add(App->physics->CreateChain(278, 205, diagonal09, 12));
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
