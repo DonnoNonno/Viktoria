@@ -222,8 +222,21 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(ball, 472, 540);
 	App->renderer->Blit(stick, 475, 600);
 	App->renderer->Blit(wood, 0, 624);
-	App->renderer->Blit(palancalefttex, 220, 523);
-	App->renderer->Blit(palancarighttex, 290, 523);
+
+	if (palancalefttex != NULL)
+	{
+		int x, y;
+		palancaleft->GetPosition(x, y);
+		App->renderer->Blit(palancalefttex, x+7, y-8, NULL, 0.2f, palancaleft->GetRotation()-30);
+	}
+	if (palancarighttex != NULL)
+	{
+		int x, y;
+		palancaright->GetPosition(x, y);
+		App->renderer->Blit(palancarighttex, x+4, y-8, NULL, 0.2f, palancaright->GetRotation()+30);
+	}
+	/*App->renderer->Blit(palancalefttex, 220, 523);
+	App->renderer->Blit(palancarighttex, 290, 523);*/
 
 	// Circles
 	p2List_item<PhysBody*>* c = circles.getFirst();
