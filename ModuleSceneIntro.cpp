@@ -51,6 +51,8 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	//lower_ground_sensor->listener = this;
 
+	circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
+
 	//Joints
 	b2RevoluteJointDef jointdef_palancaleft;
 	b2RevoluteJointDef jointdef_palancaright;
