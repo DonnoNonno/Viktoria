@@ -51,15 +51,16 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	//lower_ground_sensor->listener = this;
 
+	//Start Ball
 	circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
 
-	//Joints
+	//Plancas Joints
 	b2RevoluteJointDef jointdef_palancaleft;
 	b2RevoluteJointDef jointdef_palancaright;
 	b2RevoluteJoint* joint_palancaleft;
 	b2RevoluteJoint* joint_palancaright;
 
-	//Colisiones colliders
+	//Palancas Logic
 	palancaleft = App->physics->CreateRectangle(240, 529, 50, 10, DYNAMIC);
 	palancaright = App->physics->CreateRectangle(310, 529, 50, 10, DYNAMIC);
 	palancaleft_joint = App->physics->CreateCircle(227, 529, 5, STATIC);
@@ -310,7 +311,7 @@ update_status ModuleSceneIntro::Update()
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	// Play Audio FX on every collision, regardless of who is colliding
-	App->audio->PlayFx(bonus_fx);
+	//App->audio->PlayFx(bonus_fx);
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 }
