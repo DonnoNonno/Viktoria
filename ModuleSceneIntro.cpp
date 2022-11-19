@@ -347,6 +347,25 @@ void ModuleSceneIntro::Coll_Map() {
 		-40, 22
 	};
 
+	int diagonal10[30] = {
+		0, 0,
+		20, 0,
+		60, 6,
+		100, 22,
+		140, 45,
+		180, 85,
+		200, 118,
+		208, 137,
+		208, -5,
+		-160, -5,
+		-160, 65,
+		-140, 48,
+		-100, 22,
+		-60, 6,
+		-20, 0
+	};
+	
+
 	chains.add(App->physics->CreateChain(130, 470, diagonal01, 8));
 	chains.add(App->physics->CreateChain(422, 470, diagonal02, 8));
 	chains.add(App->physics->CreateChain(166, 439, diagonal03, 8));
@@ -356,6 +375,7 @@ void ModuleSceneIntro::Coll_Map() {
 	chains.add(App->physics->CreateChain(127, 289, diagonal07, 12));
 	chains.add(App->physics->CreateChain(385, 140, diagonal08, 8));
 	chains.add(App->physics->CreateChain(278, 205, diagonal09, 12));
+	chains.add(App->physics->CreateChain(282, 35, diagonal10, 30));
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
