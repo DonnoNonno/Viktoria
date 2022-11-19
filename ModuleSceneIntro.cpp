@@ -11,9 +11,9 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	mapa = circle = box = rick = NULL;
+	mapa = circle = NULL;
 	ray_on = false;
-	sensed = false;
+	//sensed = false;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -34,25 +34,51 @@ bool ModuleSceneIntro::Start()
 	point = App->textures->Load("pinball/point.png");
 	ball = App->textures->Load("pinball/ball.png");
 	bounce = App->textures->Load("pinball/bounce.png");
-	palancaleft = App->textures->Load("pinball/palancaleft.png");
-	palancaright = App->textures->Load("pinball/palancaright.png");
+	palancalefttex = App->textures->Load("pinball/palancaleft.png");
+	palancarighttex = App->textures->Load("pinball/palancaright.png");
 	stick = App->textures->Load("pinball/stick.png");
 	wood=App->textures->Load("pinball/wood.png");
 
 	circle = App->textures->Load("pinball/wheel.png"); 
-	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
+	//box = App->textures->Load("pinball/crate.png");
+	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
-	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
+	//lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
-	lower_ground_sensor->listener = this;
+	//lower_ground_sensor->listener = this;
 
-	//wall
+	//Joints
+	b2RevoluteJointDef jointdef_palancaleft;
+	b2RevoluteJointDef jointdef_palancaright;
+	b2RevoluteJoint* joint_palancaleft;
+	b2RevoluteJoint* joint_palancaright;
+
+	//Colisiones colliders
+	palancaleft = App->physics->CreateRectangle(240, 529, 50, 10, DYNAMIC);
+	palancaright = App->physics->CreateRectangle(310, 529, 50, 10, DYNAMIC);
+	palancaleft_joint = App->physics->CreateCircle(227, 529, 5, STATIC);
+	palancaright_joint = App->physics->CreateCircle(325, 529, 5, STATIC);
+
+	jointdef_palancaleft.Initialize(palancaleft->body, palancaleft_joint->body, palancaleft_joint->body->GetWorldCenter());
+	jointdef_palancaright.Initialize(palancaright->body, palancaright_joint->body, palancaright_joint->body->GetWorldCenter());
+
+	jointdef_palancaleft.lowerAngle = -0.2f * b2_pi;
+	jointdef_palancaleft.upperAngle = 0.2f * b2_pi;
+	jointdef_palancaright.lowerAngle = -0.2f * b2_pi;
+	jointdef_palancaright.upperAngle = 0.2f * b2_pi;
+
+	jointdef_palancaleft.enableLimit = true;
+	jointdef_palancaright.enableLimit = true;
+
+	joint_palancaleft = (b2RevoluteJoint*)App->physics->world->CreateJoint(&jointdef_palancaleft);
+	joint_palancaright = (b2RevoluteJoint*)App->physics->world->CreateJoint(&jointdef_palancaright);
+
+	//Colliders
 	PhysBody* c1 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
 	PhysBody* c2 = App->physics->CreateRectangle(71, 350, 10, 700, STATIC);
 	PhysBody* c3 = App->physics->CreateRectangle(497, 350, 10, 700, STATIC);
@@ -102,16 +128,16 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
-	// If user presses SPACE, enable RayCast
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		// Enable raycast mode
-		ray_on = !ray_on;
+	//// If user presses SPACE, enable RayCast
+	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	//{
+	//	// Enable raycast mode
+	//	ray_on = !ray_on;
 
-		// Origin point of the raycast is be the mouse current position now (will not change)
-		ray.x = App->input->GetMouseX();
-		ray.y = App->input->GetMouseY();
-	}
+	//	// Origin point of the raycast is be the mouse current position now (will not change)
+	//	ray.x = App->input->GetMouseX();
+	//	ray.y = App->input->GetMouseY();
+	//}
 
 	// If user presses 1, create a new circle object
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
@@ -123,53 +149,53 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 	}
 
-	// If user presses 2, create a new box object
-	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50,DYNAMIC));
-	}
+	//// If user presses 2, create a new box object
+	//if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	//{
+	//	boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50,DYNAMIC));
+	//}
 
-	// If user presses 3, create a new RickHead object
-	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		// Pivot 0, 0
-		int rick_head[64] = {
-			14, 36,
-			42, 40,
-			40, 0,
-			75, 30,
-			88, 4,
-			94, 39,
-			111, 36,
-			104, 58,
-			107, 62,
-			117, 67,
-			109, 73,
-			110, 85,
-			106, 91,
-			109, 99,
-			103, 104,
-			100, 115,
-			106, 121,
-			103, 125,
-			98, 126,
-			95, 137,
-			83, 147,
-			67, 147,
-			53, 140,
-			46, 132,
-			34, 136,
-			38, 126,
-			23, 123,
-			30, 114,
-			10, 102,
-			29, 90,
-			0, 75,
-			30, 62
-		};
+	//// If user presses 3, create a new RickHead object
+	//if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	//{
+	//	// Pivot 0, 0
+	//	int rick_head[64] = {
+	//		14, 36,
+	//		42, 40,
+	//		40, 0,
+	//		75, 30,
+	//		88, 4,
+	//		94, 39,
+	//		111, 36,
+	//		104, 58,
+	//		107, 62,
+	//		117, 67,
+	//		109, 73,
+	//		110, 85,
+	//		106, 91,
+	//		109, 99,
+	//		103, 104,
+	//		100, 115,
+	//		106, 121,
+	//		103, 125,
+	//		98, 126,
+	//		95, 137,
+	//		83, 147,
+	//		67, 147,
+	//		53, 140,
+	//		46, 132,
+	//		34, 136,
+	//		38, 126,
+	//		23, 123,
+	//		30, 114,
+	//		10, 102,
+	//		29, 90,
+	//		0, 75,
+	//		30, 62
+	//	};
 
-		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
-	}
+	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
+	//}
 
 	// Prepare for raycast ------------------------------------------------------
 	
@@ -196,8 +222,8 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(ball, 472, 540);
 	App->renderer->Blit(stick, 475, 600);
 	App->renderer->Blit(wood, 0, 624);
-	App->renderer->Blit(palancaleft, 220, 523);
-	App->renderer->Blit(palancaright, 290, 523);
+	App->renderer->Blit(palancalefttex, 220, 523);
+	App->renderer->Blit(palancarighttex, 290, 523);
 
 	// Circles
 	p2List_item<PhysBody*>* c = circles.getFirst();
@@ -214,36 +240,36 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-	// Boxes
-	c = boxes.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
+	//// Boxes
+	//c = boxes.getFirst();
+	//while(c != NULL)
+	//{
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
 
-		// Always paint boxes texture
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
+	//	// Always paint boxes texture
+	//	App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
 
-		// Are we hitting this box with the raycast?
-		if(ray_on)
-		{
-			// Test raycast over the box, return fraction and normal vector
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if(hit >= 0)
-				ray_hit = hit;
-		}
-		c = c->next;
-	}
+	//	// Are we hitting this box with the raycast?
+	//	if(ray_on)
+	//	{
+	//		// Test raycast over the box, return fraction and normal vector
+	//		int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
+	//		if(hit >= 0)
+	//			ray_hit = hit;
+	//	}
+	//	c = c->next;
+	//}
 
-	// Rick Heads
-	c = ricks.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
+	//// Rick Heads
+	//c = ricks.getFirst();
+	//while(c != NULL)
+	//{
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
+	//	App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
+	//	c = c->next;
+	//}
 
 	// Raycasts -----------------
 	if(ray_on == true)

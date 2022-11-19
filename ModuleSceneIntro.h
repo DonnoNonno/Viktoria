@@ -23,19 +23,19 @@ public:
 public:
 
 	// Lists of physics objects
-
 	p2List<PhysBody*> circles;
-	p2List<PhysBody*> boxes;
-	p2List<PhysBody*> ricks;
-
+	PhysBody* palancaleft;
+	PhysBody* palancaright;
+	PhysBody* palancaleft_joint;
+	PhysBody* palancaright_joint;
 	// Lower ground sensor (will kill all objects passig through it)
-	PhysBody* lower_ground_sensor;
-	bool sensed;
+	/*PhysBody* lower_ground_sensor;
+	bool sensed;*/
 
 	// Textures
 	SDL_Texture* stick;
-	SDL_Texture* palancaright;
-	SDL_Texture* palancaleft;
+	SDL_Texture* palancarighttex;
+	SDL_Texture* palancalefttex;
 	SDL_Texture* bounce;
 	SDL_Texture* ball;
 	SDL_Texture* point;
@@ -43,8 +43,8 @@ public:
 	SDL_Texture* wood;
 
 	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
+	//SDL_Texture* box;
+	//SDL_Texture* rick;
 
 	// FX
 	uint bonus_fx;
