@@ -72,10 +72,10 @@ bool ModuleSceneIntro::Start()
 	jointdef_palancaleft.Initialize(palancaleft->body, palancaleft_joint->body, palancaleft_joint->body->GetWorldCenter());
 	jointdef_palancaright.Initialize(palancaright->body, palancaright_joint->body, palancaright_joint->body->GetWorldCenter());
 
-	jointdef_palancaleft.lowerAngle = -0.2f * b2_pi;
-	jointdef_palancaleft.upperAngle = 0.2f * b2_pi;
-	jointdef_palancaright.lowerAngle = -0.2f * b2_pi;
-	jointdef_palancaright.upperAngle = 0.2f * b2_pi;
+	jointdef_palancaleft.lowerAngle = -0.1f * b2_pi;
+	jointdef_palancaleft.upperAngle = 0.1f * b2_pi;
+	jointdef_palancaright.lowerAngle = -0.1f * b2_pi;
+	jointdef_palancaright.upperAngle = 0.1f * b2_pi;
 
 	jointdef_palancaleft.enableLimit = true;
 	jointdef_palancaright.enableLimit = true;
@@ -282,15 +282,15 @@ void ModuleSceneIntro::Coll_Map() {
 
 	int diagonal01[8] = {
 		0, 0,
-		80, 45,
-		76, 54,
+		86, 48,
+		82, 57,
 		-4, 9
 	};
 
 	int diagonal02[8] = {
 		0, 0,
-		-80, 45,
-		-76, 54,
+		-86, 48,
+		-82, 57,
 		4, 9
 	};
 
