@@ -32,14 +32,13 @@ bool ModuleSceneIntro::Start()
 	// Load textures
 	mapa = App->textures->Load("pinball/mapa.png");
 	point = App->textures->Load("pinball/point.png");
-	ball = App->textures->Load("pinball/ball.png");
 	bounce = App->textures->Load("pinball/bounce.png");
 	palancalefttex = App->textures->Load("pinball/palancaleft.png");
 	palancarighttex = App->textures->Load("pinball/palancaright.png");
 	stick = App->textures->Load("pinball/stick.png");
 	wood=App->textures->Load("pinball/wood.png");
 
-	circle = App->textures->Load("pinball/wheel.png"); 
+	circle = App->textures->Load("pinball/ball.png"); 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
@@ -105,6 +104,7 @@ bool ModuleSceneIntro::Start()
 	PhysBody* c24 = App->physics->CreateRectangle(368, 158, 38, 3, STATIC);
 	PhysBody* c25 = App->physics->CreateRectangle(468, 574, 10, 3, STATIC);
 	PhysBody* c26 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
+	PhysBody* c33 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
 
 	//points ball
 	PhysBody* c27 = App->physics->CreateCircle(185, 128, 12, STATIC);
@@ -140,6 +140,8 @@ update_status ModuleSceneIntro::Update()
 	//}
 
 	// If user presses 1, create a new circle object
+
+
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8, DYNAMIC));
@@ -219,7 +221,6 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(point, 349, 190);
 	App->renderer->Blit(point, 167, 190);
 	App->renderer->Blit(bounce, 177, 390);
-	App->renderer->Blit(ball, 472, 540);
 	App->renderer->Blit(stick, 475, 600);
 	App->renderer->Blit(wood, 0, 624);
 
@@ -246,8 +247,8 @@ update_status ModuleSceneIntro::Update()
 		c->data->GetPosition(x, y);
 
 		// If mouse is over this circle, paint the circle's texture
-		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+		
+		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
 
 		
 		c = c->next;
