@@ -143,7 +143,10 @@ update_status ModuleSceneIntro::Update()
 	//}
 
 	// If user presses 1, create a new circle object
-
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8, DYNAMIC));
+		circles.getLast()->data->listener = this;
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -198,6 +201,84 @@ update_status ModuleSceneIntro::Update()
 	//		0, 75,
 	//		30, 62
 	//	};
+	int diagonal01[8] = {
+		0, 0,
+		80, 45,
+		76, 54,
+		-4, 9
+	};
+
+	int diagonal02[8] = {
+		0, 0,
+		-80, 45,
+		-76, 54,
+		4, 9
+	};
+
+	int diagonal03[8] = {
+		0, 0,
+		50, 27,
+		46, 36,
+		-4, 9
+	};
+
+	int diagonal04[8] = {
+		0, 0,
+		-50, 28,
+		-46, 37,
+		4, 9
+	};
+
+	int diagonal05[8] = {
+		0, 0,
+		120, 65,
+		115, 75,
+		-4, 9
+	};
+
+	int diagonal06[8] = {
+		0, 0,
+		-120, 65,
+		-115, 75,
+		4, 9
+	};
+
+	int diagonal07[12] = {
+		0, 0,
+		-35, 32,
+		-31, 41,
+		-1, 11,
+		9, 22,
+		16, 14
+	};
+
+	int diagonal08[8] = {
+		0, 0,
+		40, 38,
+		31, 45,
+		-4, 9
+	};
+
+	int diagonal09[12] = {
+		0, 0,
+		40, 22,
+		33, 25,
+		0, 9,
+		-33, 25,
+		-40, 22
+	};
+
+
+	chains.add(App->physics->CreateChain(130, 470, diagonal01, 8));
+	chains.add(App->physics->CreateChain(422, 470, diagonal02, 8));
+	chains.add(App->physics->CreateChain(166, 439, diagonal03, 8));
+	chains.add(App->physics->CreateChain(385, 439, diagonal04, 8));
+	chains.add(App->physics->CreateChain(94, 520, diagonal05, 8));
+	chains.add(App->physics->CreateChain(460, 520, diagonal06, 8));
+	chains.add(App->physics->CreateChain(127, 289, diagonal07, 12));
+	chains.add(App->physics->CreateChain(385, 140, diagonal08, 8));
+	chains.add(App->physics->CreateChain(278, 205, diagonal09, 12));
+	
 
 	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
 	//}
