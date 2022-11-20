@@ -365,6 +365,33 @@ void ModuleSceneIntro::Coll_Map() {
 		-60, 6,
 		-20, 0
 	};
+
+	int boing01[18] = {
+		0, 0,
+		20, -30,
+		24, -31,
+		27, -29,
+		29, -26,
+		28, 5,
+		25, 9,
+		0, 11,
+		-3, 5
+	};
+
+	int boing02[18] = {
+		0, 0,
+		-20, -30,
+		-24, -31,
+		-27, -29,
+		-29, -26,
+		-28, 5,
+		-25, 9,
+		0, 11,
+		3, 5
+	};
+
+	botibotis.add(App->physics->CreateChain(345, 425, boing01, 18));
+	botibotis.add(App->physics->CreateChain(209, 425, boing02, 18));
 	
 
 	chains.add(App->physics->CreateChain(130, 470, diagonal01, 8));
@@ -377,6 +404,7 @@ void ModuleSceneIntro::Coll_Map() {
 	chains.add(App->physics->CreateChain(385, 140, diagonal08, 8));
 	chains.add(App->physics->CreateChain(278, 205, diagonal09, 12));
 	chains.add(App->physics->CreateChain(282, 35, diagonal10, 30));
+
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)

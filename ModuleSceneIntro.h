@@ -23,7 +23,7 @@ public:
 
 public:
 
-	p2List<PhysBody*> boxes;
+	p2List<PhysBody*> botibotis;
 	p2List<PhysBody*> chains;
 
 	// Lists of physics objects
