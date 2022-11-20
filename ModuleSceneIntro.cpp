@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -113,6 +114,8 @@ bool ModuleSceneIntro::Start()
 	c25 = App->physics->CreateRectangle(468, 574, 10, 3, STATIC);
 	c26 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
 	c33 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
+	inicio = App->physics->CreateRectangleSensor(480, 575, 10, 10);
+	inicio->listener = this;
 
 	//Points ball
 	c27 = App->physics->CreateCircleBounce(185, 128, 12, STATIC);
@@ -461,6 +464,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		solouno = true;
 		muerto = true;
+	}
+
+	if (bodyB == inicio) {
+		App->player->soplar = true;
 	}
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)

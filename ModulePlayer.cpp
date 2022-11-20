@@ -55,8 +55,9 @@ update_status ModulePlayer::Update()
 			App->renderer->Blit(balltex, x, y, NULL, velshot, ball->GetRotation());
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP && soplar == true) {
 			ball->body->ApplyForceToCenter({ 0, -70 },true);
+			soplar = false;
 		}
 
 		//Ventilador

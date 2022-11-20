@@ -29,4 +29,5 @@ public:
 
 	int countvel;
 	float velshot = 1.0f;
+	bool soplar;
 };

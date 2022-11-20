@@ -68,6 +68,7 @@ public:
 	PhysBody* c31;
 	PhysBody* c32;
 	PhysBody* c33;
+	PhysBody* inicio;
 
 	// Lower ground sensor (will kill all objects passig through it)
 	/*PhysBody* lower_ground_sensor;
