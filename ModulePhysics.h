@@ -70,9 +70,11 @@ public:
 
 	// Create basic physics objects
 	PhysBody* CreateCircle(int x, int y, int radius, bodyType type);
+	PhysBody* CreateCircleBounce(int x, int y, int radius, bodyType type);
 	PhysBody* CreateRectangle(int x, int y, int width, int height, bodyType type);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+	PhysBody* CreateChainBumper(int x, int y, int* points, int size);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

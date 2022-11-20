@@ -115,12 +115,12 @@ bool ModuleSceneIntro::Start()
 	c33 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
 
 	//Points ball
-	c27 = App->physics->CreateCircle(185, 128, 12, STATIC);
-	c28 = App->physics->CreateCircle(244, 128, 12, STATIC);
-	c29 = App->physics->CreateCircle(307, 128, 12, STATIC);
-	c30 = App->physics->CreateCircle(368, 128, 12, STATIC);
-	c31 = App->physics->CreateCircle(185, 209, 12, STATIC);
-	c32 = App->physics->CreateCircle(368, 209, 12, STATIC);
+	c27 = App->physics->CreateCircleBounce(185, 128, 12, STATIC);
+	c28 = App->physics->CreateCircleBounce(244, 128, 12, STATIC);
+	c29 = App->physics->CreateCircleBounce(307, 128, 12, STATIC);
+	c30 = App->physics->CreateCircleBounce(368, 128, 12, STATIC);
+	c31 = App->physics->CreateCircleBounce(185, 209, 12, STATIC);
+	c32 = App->physics->CreateCircleBounce(368, 209, 12, STATIC);
 
 	//Inicia otras colisiones
 	Coll_Map();
@@ -418,8 +418,8 @@ void ModuleSceneIntro::Coll_Map() {
 		3, 5
 	};
 
-	botibotis.add(App->physics->CreateChain(345, 425, boing01, 18));
-	botibotis.add(App->physics->CreateChain(209, 425, boing02, 18));
+	botibotis.add(App->physics->CreateChainBumper(345, 425, boing01, 18));
+	botibotis.add(App->physics->CreateChainBumper(209, 425, boing02, 18));
 	
 
 	chains.add(App->physics->CreateChain(130, 470, diagonal01, 8));
