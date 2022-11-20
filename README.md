@@ -16,6 +16,7 @@ Pinball game for the physics subject.
 
  - Left arrow: Move left flipper
  - Right arrow: Move right flipper
+ - Down arrow: Activates kicker
 
 ## Debug
 
@@ -37,6 +38,8 @@ Pinball game for the physics subject.
  - Memory Leak with chains. The chains did not stop creating infinitely.
 
    Solution --> - Creating a function that prints all chains once.
+   
+ - When the kicker activates, it activates once more. If it falls back to the kicker zone, the previous impulse is restarted again
 
 ## License
 
