@@ -421,17 +421,17 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	// Play Audio FX on every collision, regardless of who is colliding
 	//App->audio->PlayFx(bonus_fx);
-	switch (bodyA->ctype)
+	/*switch (bodyB->ctype)
 	{
 		case ColliderType::LOSE:
+			App->audio->PlayFx(App->audio->hit_ball);
 			App->textures->Unload(balltex);
 			break;
-
-
-
-
-
-
+	}*/
+	App->renderer->Blit(ventilador, 400, 610);
+	if (bodyB->ctype == ColliderType::LOSE) {
+		App->audio->PlayFx(App->audio->hit_ball);
+		
 	}
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
