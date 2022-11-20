@@ -34,6 +34,7 @@ public:
 	PhysBody* palancaright_joint;
 	PhysBody* bolita;
 
+	PhysBody* s1;
 	PhysBody* c1;
 	PhysBody* c2;
 	PhysBody* c3;
@@ -92,4 +93,8 @@ public:
 	// Raycast
 	p2Point<int> ray;
 	bool ray_on;
+
+	// variables de condición
+	bool solouno = false;
+	bool muerto = false;
 };
