@@ -11,7 +11,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	mapa = balltex = NULL;
+	mapa = NULL;
 	//sensed = false;
 }
 
@@ -41,7 +41,6 @@ bool ModuleSceneIntro::Start()
 	wood=App->textures->Load("pinball/wood.png");
 	air = App->textures->Load("pinball/air.png");
 
-	balltex = App->textures->Load("pinball/ball.png"); 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
@@ -55,7 +54,7 @@ bool ModuleSceneIntro::Start()
 	//lower_ground_sensor->listener = this;
 
 	//Start Ball
-	circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
+	//circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
 
 	//Plancas Joints
 	b2RevoluteJointDef jointdef_palancaleft;
@@ -152,14 +151,14 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 	}*/
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
+	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	//{
+	//	circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
 
-		// Add this module (ModuleSceneIntro) as a "listener" interested in collisions with circles.
-		// If Box2D detects a collision with this last generated circle, it will automatically callback the function ModulePhysics::BeginContact()
-		circles.getLast()->data->listener = this;
-	}
+	//	// Add this module (ModuleSceneIntro) as a "listener" interested in collisions with circles.
+	//	// If Box2D detects a collision with this last generated circle, it will automatically callback the function ModulePhysics::BeginContact()
+	//	circles.getLast()->data->listener = this;
+	//}
 
 	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
 	//}
@@ -205,18 +204,18 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(palancarighttex, 290, 523);*/
 
 	// Circles
-	p2List_item<PhysBody*>* c = circles.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
+	//p2List_item<PhysBody*>* c = circles.getFirst();
+	//while(c != NULL)
+	//{
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
 
-		// If mouse is over this circle, paint the circle's texture
-		
-		App->renderer->Blit(balltex, x, y, NULL, 1.0f, c->data->GetRotation());
+	//	// If mouse is over this circle, paint the circle's texture
+	//	
+	//	App->renderer->Blit(balltex, x, y, NULL, 1.0f, c->data->GetRotation());
 
-		c = c->next;
-	}
+	//	c = c->next;
+	//}
 
 	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
@@ -272,8 +271,6 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
-
-	
 
 	// Keep playing
 	return UPDATE_CONTINUE;

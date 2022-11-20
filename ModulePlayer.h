@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "ModuleTextures.h"
 #include "ModulePhysics.h"
 
 class ModulePlayer : public Module
@@ -15,5 +16,7 @@ public:
 	bool CleanUp();
 
 public:
-
+	//Ball things
+	PhysBody* ball;
+	SDL_Texture* balltex;
 };

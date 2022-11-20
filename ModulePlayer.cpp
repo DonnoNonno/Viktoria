@@ -4,6 +4,7 @@
 #include "ModulePhysics.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"
+#include "ModuleTextures.h"
 #include "ModuleSceneIntro.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -17,6 +18,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+	balltex = App->textures->Load("pinball/ball.png");
+	ball = (App->physics->CreateCircle(480, 560, 8, DYNAMIC));
 	return true;
 }
 
@@ -24,13 +27,20 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
+	ball = nullptr;
+	balltex = nullptr;
 	return true;
 }
 
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+
+	if (ball != NULL) {
+		int x, y;
+		ball->GetPosition(x, y);
+		App->renderer->Blit(balltex, x, y, NULL, 1.0f, ball->GetRotation());
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		App->scene_intro->palancaleft->body->ApplyTorque(-40.0f, true);

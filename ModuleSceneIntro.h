@@ -45,7 +45,6 @@ public:
 	SDL_Texture* point;
 	SDL_Texture* mapa;
 	SDL_Texture* wood;
-	SDL_Texture* balltex;
 	//SDL_Texture* box;
 	//SDL_Texture* rick;
 
