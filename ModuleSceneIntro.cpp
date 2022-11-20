@@ -42,7 +42,7 @@ bool ModuleSceneIntro::Start()
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	//Load sounds
-	music = App->audio->LoadFx("pinball/Audios/music-.ogg");
+	//music = App->audio->LoadFx("pinball/Audios/music-.ogg");
 	dead_fx = App->audio->LoadFx("pinball/Audios/lose_sound.wav");
 
 	// Create a big red sensor on the bottom of the screen.
@@ -169,9 +169,9 @@ update_status ModuleSceneIntro::Update()
 	// Prepare for raycast ------------------------------------------------------
 	
 	//Music update
-	if (!muerto && !titlescene) {
+	/*if (!muerto && !titlescene) {
 		App->audio->PlayFx(music);
-	}
+	}*/
 	
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
@@ -220,7 +220,7 @@ update_status ModuleSceneIntro::Update()
 
 	if (muerto) {
 		App->renderer->Blit(losescreen, 0, 0);
-		music = NULL;
+		//music = NULL;
 	}
 	/*App->renderer->Blit(palancalefttex, 220, 523);
 	App->renderer->Blit(palancarighttex, 290, 523);*/
@@ -459,7 +459,6 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (solouno == false) {
 			App->audio->PlayFx(dead_fx);
 		}
-		App->audio->CleanUp();
 		solouno = true;
 		muerto = true;
 	}

@@ -88,8 +88,9 @@ public:
 	//SDL_Texture* rick;
 
 	// Music & FX
-	uint music;
+	//uint music;
 	uint dead_fx;
+	uint point_fx;
 
 	// Raycast
 	p2Point<int> ray;
