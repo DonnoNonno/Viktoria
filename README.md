@@ -37,3 +37,7 @@ Pinball game for the physics subject.
  - Memory Leak with chains. The chains did not stop creating infinitely.
 
    Solution --> - Creating a function that prints all chains once.
+
+## License
+
+This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
