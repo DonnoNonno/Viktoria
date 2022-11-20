@@ -7,6 +7,10 @@ Pinball game for the physics subject.
 
 **Github Link:** https://github.com/DonnoNonno/Viktoria
 
+## Features
+ - Title Scene & Dead Scene.
+ - Bumpers do a bounce effect.
+ - Death and flippers have Fx.
 
 ## Controls
 
