@@ -41,18 +41,21 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	if (!App->scene_intro->titlescene) {
+	if (!App->scene_intro->titlescene && !App->scene_intro->muerto) {
 		//Ball
 		if (ball != NULL) {
 			int x, y;
 			ball->GetPosition(x, y);
-			App->renderer->Blit(balltex, x, y, NULL, 1.0f, ball->GetRotation());
+			App->renderer->Blit(balltex, x, y, NULL, velshot, ball->GetRotation());
 		}
 
 		//Ventilador
 		App->renderer->Blit(ventilador, 466, 610);
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+
+			countvel++;
 			App->renderer->Blit(air, 466, 585);
+		}
 
 		//Palancas
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -64,6 +67,10 @@ update_status ModulePlayer::Update()
 			App->scene_intro->palancaright->body->ApplyTorque(40.0f, true);
 		else
 			App->scene_intro->palancaright->body->ApplyTorque(-5.0f, true);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
+		velshot = countvel;
 	}
 	
 	return UPDATE_CONTINUE;

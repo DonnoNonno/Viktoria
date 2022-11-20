@@ -34,6 +34,7 @@ public:
 	PhysBody* palancaright_joint;
 	PhysBody* bolita;
 
+	PhysBody* s1;
 	PhysBody* c1;
 	PhysBody* c2;
 	PhysBody* c3;
@@ -75,6 +76,7 @@ public:
 	//Scenes
 	SDL_Texture* title;
 	bool titlescene = true;
+	SDL_Texture* losescreen;
 
 	//Textures
 	SDL_Texture* palancarighttex;
@@ -86,10 +88,15 @@ public:
 	//SDL_Texture* box;
 	//SDL_Texture* rick;
 
-	// FX
-	uint bonus_fx;
+	// Music & FX
+	uint music;
+	uint dead_fx;
 
 	// Raycast
 	p2Point<int> ray;
 	bool ray_on;
+
+	// Variables de condición muerte
+	bool solouno = false;
+	bool muerto = false;
 };

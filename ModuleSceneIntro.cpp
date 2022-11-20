@@ -30,6 +30,7 @@ bool ModuleSceneIntro::Start()
 
 	//Load scenes
 	title = App->textures->Load("pinball/titlescreen.png");
+	losescreen = App->textures->Load("pinball/losescreen.png");
 
 	// Load textures
 	mapa = App->textures->Load("pinball/mapa.png");
@@ -41,7 +42,9 @@ bool ModuleSceneIntro::Start()
 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	//Load sounds
+	music = App->audio->LoadFx("pinball/Audios/music.ogg");
+	dead_fx = App->audio->LoadFx("pinball/Audios/lose_sound.wav");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -65,8 +68,6 @@ bool ModuleSceneIntro::Start()
 	palancaright = App->physics->CreateRectangle(310, 530, 50, 15, DYNAMIC);
 	palancaleft_joint = App->physics->CreateCircle(227, 530, 5, STATIC);
 	palancaright_joint = App->physics->CreateCircle(325, 530, 5, STATIC);
-	bolita = App->physics->CreateCircle(325, 230, 10, DYNAMIC);
-	bolita->ctype = ColliderType::BALL;
 
 	jointdef_palancaleft.Initialize(palancaleft->body, palancaleft_joint->body, palancaleft_joint->body->GetWorldCenter());
 	jointdef_palancaright.Initialize(palancaright->body, palancaright_joint->body, palancaright_joint->body->GetWorldCenter());
@@ -83,9 +84,10 @@ bool ModuleSceneIntro::Start()
 	joint_palancaright = (b2RevoluteJoint*)App->physics->world->CreateJoint(&jointdef_palancaright);
 
 	//Colliders
+	s1 = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, 689, SCREEN_WIDTH, 130);
+	s1->ctype = ColliderType::LOSE;
+	s1->listener = this;
 	c1 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
-	c1->ctype = ColliderType::LOSE;
-	c1->listener = this;
 	c2 = App->physics->CreateRectangle(71, 325, 10, 600, STATIC);
 	c3 = App->physics->CreateRectangle(497, 325, 10, 600, STATIC);
 	c4 = App->physics->CreateRectangle(462, 440, 9, 370, STATIC);
@@ -167,6 +169,11 @@ update_status ModuleSceneIntro::Update()
 
 	// Prepare for raycast ------------------------------------------------------
 	
+	//Music update
+	if (!muerto && !titlescene) {
+		App->audio->PlayFx(music);
+	}
+	
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -211,6 +218,11 @@ update_status ModuleSceneIntro::Update()
 		int x, y;
 		palancaright->GetPosition(x, y);
 		App->renderer->Blit(palancarighttex, x+4, y-8, NULL, 0.2f, palancaright->GetRotation()+30);
+	}
+
+	if (muerto) {
+		App->renderer->Blit(losescreen, 0, 0);
+		music = NULL;
 	}
 	/*App->renderer->Blit(palancalefttex, 220, 523);
 	App->renderer->Blit(palancarighttex, 290, 523);*/
@@ -437,12 +449,21 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			App->textures->Unload(balltex);
 			break;
 	}*/
-	if (bodyB->ctype == ColliderType::BALL && bodyA->ctype == ColliderType::LOSE) {
-		App->audio->PlayFx(App->audio->hit_ball);
-	}
+	
+	LOG("Toydentro")
 
-	if (bodyA == c1 || bodyB == c1) {
+	/*if (bodyB->ctype == ColliderType::BALL && bodyA->ctype == ColliderType::LOSE) {
 		App->audio->PlayFx(App->audio->hit_ball);
+	}*/
+
+	if (bodyB == s1) {
+		App->audio->Init();
+		if (solouno == false) {
+			App->audio->PlayFx(dead_fx);
+		}
+		App->audio->CleanUp();
+		solouno = true;
+		muerto = true;
 	}
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
