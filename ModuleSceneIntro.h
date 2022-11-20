@@ -33,6 +33,41 @@ public:
 	PhysBody* palancaleft_joint;
 	PhysBody* palancaright_joint;
 	PhysBody* bolita;
+
+	PhysBody* c1;
+	PhysBody* c2;
+	PhysBody* c3;
+	PhysBody* c4;
+	PhysBody* c5;
+	PhysBody* c6;
+	PhysBody* c7;
+	PhysBody* c8;
+	PhysBody* c9;
+	PhysBody* c10;
+	PhysBody* c11;
+	PhysBody* c12;
+	PhysBody* c13;
+	PhysBody* c14;
+	PhysBody* c15;
+	PhysBody* c16;
+	PhysBody* c17;
+	PhysBody* c18;
+	PhysBody* c19;
+	PhysBody* c20;
+	PhysBody* c21;
+	PhysBody* c22;
+	PhysBody* c23;
+	PhysBody* c24;
+	PhysBody* c25;
+	PhysBody* c26;
+	PhysBody* c27;
+	PhysBody* c28;
+	PhysBody* c29;
+	PhysBody* c30;
+	PhysBody* c31;
+	PhysBody* c32;
+	PhysBody* c33;
+
 	// Lower ground sensor (will kill all objects passig through it)
 	/*PhysBody* lower_ground_sensor;
 	bool sensed;*/
