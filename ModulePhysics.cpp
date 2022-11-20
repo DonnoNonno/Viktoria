@@ -326,7 +326,7 @@ PhysBody* ModulePhysics::CreateCircleBounce(int x, int y, int radius, bodyType t
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
-	fixture.restitution = 1.0f;
+	fixture.restitution = 0.5f;
 
 	// Add fixture to the BODY
 	b->CreateFixture(&fixture);
