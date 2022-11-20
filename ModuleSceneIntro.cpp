@@ -11,7 +11,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	mapa = circle = NULL;
+	mapa = balltex = NULL;
 	//sensed = false;
 }
 
@@ -40,7 +40,7 @@ bool ModuleSceneIntro::Start()
 	stick = App->textures->Load("pinball/stick.png");
 	wood=App->textures->Load("pinball/wood.png");
 
-	circle = App->textures->Load("pinball/ball.png"); 
+	balltex = App->textures->Load("pinball/ball.png"); 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
@@ -63,10 +63,10 @@ bool ModuleSceneIntro::Start()
 	b2RevoluteJoint* joint_palancaright;
 
 	//Palancas Logic
-	palancaleft = App->physics->CreateRectangle(240, 529, 50, 15, DYNAMIC);
-	palancaright = App->physics->CreateRectangle(310, 529, 50, 15, DYNAMIC);
-	palancaleft_joint = App->physics->CreateCircle(227, 529, 5, STATIC);
-	palancaright_joint = App->physics->CreateCircle(325, 529, 5, STATIC);
+	palancaleft = App->physics->CreateRectangle(240, 530, 50, 15, DYNAMIC);
+	palancaright = App->physics->CreateRectangle(310, 530, 50, 15, DYNAMIC);
+	palancaleft_joint = App->physics->CreateCircle(227, 530, 5, STATIC);
+	palancaright_joint = App->physics->CreateCircle(325, 530, 5, STATIC);
 
 	jointdef_palancaleft.Initialize(palancaleft->body, palancaleft_joint->body, palancaleft_joint->body->GetWorldCenter());
 	jointdef_palancaright.Initialize(palancaright->body, palancaright_joint->body, palancaright_joint->body->GetWorldCenter());
@@ -111,7 +111,7 @@ bool ModuleSceneIntro::Start()
 	PhysBody* c26 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
 	PhysBody* c33 = App->physics->CreateRectangle(490, 574, 10, 3, STATIC);
 
-	//points ball
+	//Points ball
 	PhysBody* c27 = App->physics->CreateCircle(185, 128, 12, STATIC);
 	PhysBody* c28 = App->physics->CreateCircle(244, 128, 12, STATIC);
 	PhysBody* c29 = App->physics->CreateCircle(307, 128, 12, STATIC);
@@ -211,11 +211,18 @@ update_status ModuleSceneIntro::Update()
 
 		// If mouse is over this circle, paint the circle's texture
 		
-		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(balltex, x, y, NULL, 1.0f, c->data->GetRotation());
 
-		
 		c = c->next;
 	}
+
+	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	{
+		b2Vec2 impulse = b2Vec2(0.0f, -1.0f);
+
+		b2Vec2 point = circles->body->GetLocalCenter();
+		circles->body->ApplyLinearImpulse(impulse, point, true);
+	}*/
 
 	//// Boxes
 	//c = boxes.getFirst();

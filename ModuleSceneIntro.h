@@ -41,12 +41,10 @@ public:
 	SDL_Texture* palancarighttex;
 	SDL_Texture* palancalefttex;
 	SDL_Texture* bounce;
-	SDL_Texture* ball;
 	SDL_Texture* point;
 	SDL_Texture* mapa;
 	SDL_Texture* wood;
-
-	SDL_Texture* circle;
+	SDL_Texture* balltex;
 	//SDL_Texture* box;
 	//SDL_Texture* rick;
 
