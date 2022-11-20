@@ -49,10 +49,15 @@ update_status ModulePlayer::Update()
 			App->renderer->Blit(balltex, x, y, NULL, velshot, ball->GetRotation());
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
+			ball->body->ApplyForceToCenter({ 0, -70 },true);
+		}
+
 		//Ventilador
 		App->renderer->Blit(ventilador, 466, 610);
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 
+			
 			countvel++;
 			App->renderer->Blit(air, 466, 585);
 		}
