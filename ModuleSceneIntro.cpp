@@ -30,6 +30,7 @@ bool ModuleSceneIntro::Start()
 
 	//Load scenes
 	title = App->textures->Load("pinball/titlescreen.png");
+	losescreen = App->textures->Load("pinball/losescreen.png");
 
 	// Load textures
 	mapa = App->textures->Load("pinball/mapa.png");
@@ -41,7 +42,9 @@ bool ModuleSceneIntro::Start()
 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	//Load sounds
+	music = App->audio->LoadFx("pinball/Audios/music.ogg");
+	dead_fx = App->audio->LoadFx("pinball/Audios/lose_sound.wav");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -166,6 +169,11 @@ update_status ModuleSceneIntro::Update()
 
 	// Prepare for raycast ------------------------------------------------------
 	
+	//Music update
+	if (!muerto && !titlescene) {
+		App->audio->PlayFx(music);
+	}
+	
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -213,7 +221,8 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	if (muerto) {
-		
+		App->renderer->Blit(losescreen, 0, 0);
+		music = NULL;
 	}
 	/*App->renderer->Blit(palancalefttex, 220, 523);
 	App->renderer->Blit(palancarighttex, 290, 523);*/
@@ -443,13 +452,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	
 	LOG("Toydentro")
 
-	if (bodyB->ctype == ColliderType::BALL && bodyA->ctype == ColliderType::LOSE) {
+	/*if (bodyB->ctype == ColliderType::BALL && bodyA->ctype == ColliderType::LOSE) {
 		App->audio->PlayFx(App->audio->hit_ball);
-	}
+	}*/
 
 	if (bodyB == s1) {
 		if (solouno == false) {
-			App->audio->PlayFx(bonus_fx);
+			App->audio->PlayFx(dead_fx);
 		}
 		solouno = true;
 		muerto = true;
