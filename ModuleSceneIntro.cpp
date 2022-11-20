@@ -28,8 +28,8 @@ bool ModuleSceneIntro::Start()
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	//Inicia otras colisiones
-	Coll_Map();
+	//Load scenes
+	title = App->textures->Load("pinball/titlescreen.png");
 
 	// Load textures
 	mapa = App->textures->Load("pinball/mapa.png");
@@ -37,7 +37,7 @@ bool ModuleSceneIntro::Start()
 	bounce = App->textures->Load("pinball/bounce.png");
 	palancalefttex = App->textures->Load("pinball/palancaleft.png");
 	palancarighttex = App->textures->Load("pinball/palancaright.png");
-	wood=App->textures->Load("pinball/wood.png");
+	wood= App->textures->Load("pinball/wood.png");
 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
@@ -120,7 +120,8 @@ bool ModuleSceneIntro::Start()
 	PhysBody* c31 = App->physics->CreateCircle(185, 209, 12, STATIC);
 	PhysBody* c32 = App->physics->CreateCircle(368, 209, 12, STATIC);
 
-	//bounce
+	//Inicia otras colisiones
+	Coll_Map();
 
 	return ret;
 }
@@ -177,6 +178,7 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
+
 	App->renderer->Blit(mapa, 0, 0);
 	App->renderer->Blit(point, 167, 110);
 	App->renderer->Blit(point, 227, 110);
@@ -186,14 +188,24 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(point, 167, 190);
 	App->renderer->Blit(bounce, 177, 390);
 	App->renderer->Blit(wood, 0, 624);
+	
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT) {
+		titlescene = false;
+	}
+	if (titlescene) {
+		App->renderer->Blit(title, 0, 0);
+	}
+	else {
 
-	if (palancalefttex != NULL)
+	}
+
+	if (palancalefttex != NULL && !titlescene)
 	{
 		int x, y;
 		palancaleft->GetPosition(x, y);
 		App->renderer->Blit(palancalefttex, x+7, y-8, NULL, 0.2f, palancaleft->GetRotation()-30);
 	}
-	if (palancarighttex != NULL)
+	if (palancarighttex != NULL && !titlescene)
 	{
 		int x, y;
 		palancaright->GetPosition(x, y);

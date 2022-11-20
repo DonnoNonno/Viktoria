@@ -41,28 +41,30 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	//Ball
-	if (ball != NULL) {
-		int x, y;
-		ball->GetPosition(x, y);
-		App->renderer->Blit(balltex, x, y, NULL, 1.0f, ball->GetRotation());
+	if (!App->scene_intro->titlescene) {
+		//Ball
+		if (ball != NULL) {
+			int x, y;
+			ball->GetPosition(x, y);
+			App->renderer->Blit(balltex, x, y, NULL, 1.0f, ball->GetRotation());
+		}
+
+		//Ventilador
+		App->renderer->Blit(ventilador, 466, 610);
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			App->renderer->Blit(air, 466, 585);
+
+		//Palancas
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			App->scene_intro->palancaleft->body->ApplyTorque(-40.0f, true);
+		else
+			App->scene_intro->palancaleft->body->ApplyTorque(5.0f, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			App->scene_intro->palancaright->body->ApplyTorque(40.0f, true);
+		else
+			App->scene_intro->palancaright->body->ApplyTorque(-5.0f, true);
 	}
-
-	//Ventilador
-	App->renderer->Blit(ventilador, 466, 610);
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->Blit(air, 466, 585);
-
-	//Palancas
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->scene_intro->palancaleft->body->ApplyTorque(-40.0f, true);
-	else
-		App->scene_intro->palancaleft->body->ApplyTorque(5.0f, true);
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->scene_intro->palancaright->body->ApplyTorque(40.0f, true);
-	else
-		App->scene_intro->palancaright->body->ApplyTorque(-5.0f, true);
 	
 	return UPDATE_CONTINUE;
 }

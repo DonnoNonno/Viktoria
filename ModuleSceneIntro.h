@@ -37,6 +37,10 @@ public:
 	/*PhysBody* lower_ground_sensor;
 	bool sensed;*/
 
+	//Scenes
+	SDL_Texture* title;
+	bool titlescene = true;
+
 	//Textures
 	SDL_Texture* palancarighttex;
 	SDL_Texture* palancalefttex;
