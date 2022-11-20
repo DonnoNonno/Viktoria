@@ -67,6 +67,8 @@ bool ModuleSceneIntro::Start()
 	palancaright = App->physics->CreateRectangle(310, 530, 50, 15, DYNAMIC);
 	palancaleft_joint = App->physics->CreateCircle(227, 530, 5, STATIC);
 	palancaright_joint = App->physics->CreateCircle(325, 530, 5, STATIC);
+	bolita = App->physics->CreateCircle(325, 230, 10, DYNAMIC);
+	bolita->ctype = ColliderType::BALL;
 
 	jointdef_palancaleft.Initialize(palancaleft->body, palancaleft_joint->body, palancaleft_joint->body->GetWorldCenter());
 	jointdef_palancaright.Initialize(palancaright->body, palancaright_joint->body, palancaright_joint->body->GetWorldCenter());
@@ -426,9 +428,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			break;
 	}*/
 	App->renderer->Blit(ventilador, 400, 610);
-	if (bodyB->ctype == ColliderType::LOSE) {
+	if (bodyB->ctype == ColliderType::BALL && bodyA->ctype == ColliderType::LOSE) {
 		App->audio->PlayFx(App->audio->hit_ball);
-		
 	}
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)

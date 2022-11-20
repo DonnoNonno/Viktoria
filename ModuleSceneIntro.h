@@ -32,6 +32,7 @@ public:
 	PhysBody* palancaright;
 	PhysBody* palancaleft_joint;
 	PhysBody* palancaright_joint;
+	PhysBody* bolita;
 	// Lower ground sensor (will kill all objects passig through it)
 	/*PhysBody* lower_ground_sensor;
 	bool sensed;*/

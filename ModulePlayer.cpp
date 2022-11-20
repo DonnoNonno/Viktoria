@@ -20,6 +20,8 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	balltex = App->textures->Load("pinball/ball.png");
 	ball = (App->physics->CreateCircle(480, 560, 8, DYNAMIC));
+	ball->ctype = ColliderType::BALL;
+	
 	return true;
 }
 
