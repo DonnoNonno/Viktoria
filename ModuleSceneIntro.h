@@ -37,6 +37,7 @@ public:
 	bool sensed;*/
 
 	// Textures
+	SDL_Texture* air;
 	SDL_Texture* ventilador;
 	SDL_Texture* palancarighttex;
 	SDL_Texture* palancalefttex;

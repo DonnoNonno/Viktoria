@@ -39,6 +39,7 @@ bool ModuleSceneIntro::Start()
 	palancarighttex = App->textures->Load("pinball/palancaright.png");
 	ventilador = App->textures->Load("pinball/ventilador.png");
 	wood=App->textures->Load("pinball/wood.png");
+	air = App->textures->Load("pinball/air.png");
 
 	balltex = App->textures->Load("pinball/ball.png"); 
 	//box = App->textures->Load("pinball/crate.png");
