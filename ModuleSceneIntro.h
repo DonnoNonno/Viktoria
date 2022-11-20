@@ -37,9 +37,7 @@ public:
 	/*PhysBody* lower_ground_sensor;
 	bool sensed;*/
 
-	// Textures
-	SDL_Texture* air;
-	SDL_Texture* ventilador;
+	//Textures
 	SDL_Texture* palancarighttex;
 	SDL_Texture* palancalefttex;
 	SDL_Texture* bounce;

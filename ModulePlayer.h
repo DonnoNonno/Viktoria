@@ -19,4 +19,8 @@ public:
 	//Ball things
 	PhysBody* ball;
 	SDL_Texture* balltex;
+
+	//Ventilador
+	SDL_Texture* air;
+	SDL_Texture* ventilador;
 };

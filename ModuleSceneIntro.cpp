@@ -37,9 +37,7 @@ bool ModuleSceneIntro::Start()
 	bounce = App->textures->Load("pinball/bounce.png");
 	palancalefttex = App->textures->Load("pinball/palancaleft.png");
 	palancarighttex = App->textures->Load("pinball/palancaright.png");
-	ventilador = App->textures->Load("pinball/ventilador.png");
 	wood=App->textures->Load("pinball/wood.png");
-	air = App->textures->Load("pinball/air.png");
 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
@@ -187,7 +185,6 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(point, 349, 190);
 	App->renderer->Blit(point, 167, 190);
 	App->renderer->Blit(bounce, 177, 390);
-	App->renderer->Blit(ventilador, 466, 610);
 	App->renderer->Blit(wood, 0, 624);
 
 	if (palancalefttex != NULL)
@@ -427,7 +424,6 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			App->textures->Unload(balltex);
 			break;
 	}*/
-	App->renderer->Blit(ventilador, 400, 610);
 	if (bodyB->ctype == ColliderType::BALL && bodyA->ctype == ColliderType::LOSE) {
 		App->audio->PlayFx(App->audio->hit_ball);
 	}

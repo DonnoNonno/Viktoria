@@ -18,7 +18,11 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+	//Texturas
 	balltex = App->textures->Load("pinball/ball.png");
+	ventilador = App->textures->Load("pinball/ventilador.png");
+	air = App->textures->Load("pinball/air.png");
+
 	ball = (App->physics->CreateCircle(480, 560, 8, DYNAMIC));
 	ball->ctype = ColliderType::BALL;
 	
@@ -37,13 +41,19 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-
+	//Ball
 	if (ball != NULL) {
 		int x, y;
 		ball->GetPosition(x, y);
 		App->renderer->Blit(balltex, x, y, NULL, 1.0f, ball->GetRotation());
 	}
 
+	//Ventilador
+	App->renderer->Blit(ventilador, 466, 610);
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->renderer->Blit(air, 466, 585);
+
+	//Palancas
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		App->scene_intro->palancaleft->body->ApplyTorque(-40.0f, true);
 	else
