@@ -37,7 +37,7 @@ bool ModuleSceneIntro::Start()
 	bounce = App->textures->Load("pinball/bounce.png");
 	palancalefttex = App->textures->Load("pinball/palancaleft.png");
 	palancarighttex = App->textures->Load("pinball/palancaright.png");
-	stick = App->textures->Load("pinball/stick.png");
+	ventilador = App->textures->Load("pinball/ventilador.png");
 	wood=App->textures->Load("pinball/wood.png");
 
 	balltex = App->textures->Load("pinball/ball.png"); 
@@ -184,7 +184,7 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(point, 349, 190);
 	App->renderer->Blit(point, 167, 190);
 	App->renderer->Blit(bounce, 177, 390);
-	App->renderer->Blit(stick, 475, 600);
+	App->renderer->Blit(ventilador, 466, 610);
 	App->renderer->Blit(wood, 0, 624);
 
 	if (palancalefttex != NULL)

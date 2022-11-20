@@ -37,7 +37,7 @@ public:
 	bool sensed;*/
 
 	// Textures
-	SDL_Texture* stick;
+	SDL_Texture* ventilador;
 	SDL_Texture* palancarighttex;
 	SDL_Texture* palancalefttex;
 	SDL_Texture* bounce;
