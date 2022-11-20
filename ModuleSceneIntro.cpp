@@ -63,8 +63,8 @@ bool ModuleSceneIntro::Start()
 	b2RevoluteJoint* joint_palancaright;
 
 	//Palancas Logic
-	palancaleft = App->physics->CreateRectangle(240, 529, 50, 10, DYNAMIC);
-	palancaright = App->physics->CreateRectangle(310, 529, 50, 10, DYNAMIC);
+	palancaleft = App->physics->CreateRectangle(240, 529, 50, 15, DYNAMIC);
+	palancaright = App->physics->CreateRectangle(310, 529, 50, 15, DYNAMIC);
 	palancaleft_joint = App->physics->CreateCircle(227, 529, 5, STATIC);
 	palancaright_joint = App->physics->CreateCircle(325, 529, 5, STATIC);
 
@@ -283,8 +283,8 @@ void ModuleSceneIntro::Coll_Map() {
 
 	int diagonal01[8] = {
 		0, 0,
-		86, 48,
-		82, 57,
+		84, 48,
+		80, 57,
 		-4, 9
 	};
 

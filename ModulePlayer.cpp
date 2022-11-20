@@ -33,12 +33,12 @@ update_status ModulePlayer::Update()
 {
 	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->scene_intro->palancaleft->body->ApplyTorque(-60.0f, true);
+		App->scene_intro->palancaleft->body->ApplyTorque(-30.0f, true);
 	else
 		App->scene_intro->palancaleft->body->ApplyTorque(5.0f, true);
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->scene_intro->palancaright->body->ApplyTorque(60.0f, true);
+		App->scene_intro->palancaright->body->ApplyTorque(30.0f, true);
 	else
 		App->scene_intro->palancaright->body->ApplyTorque(-5.0f, true);
 	
