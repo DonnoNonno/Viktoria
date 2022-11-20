@@ -169,9 +169,9 @@ update_status ModuleSceneIntro::Update()
 	// Prepare for raycast ------------------------------------------------------
 	
 	//Music update
-	if (!muerto && !titlescene) {
+	/*if (!muerto && !titlescene) {
 		App->audio->PlayFx(music);
-	}
+	}*/
 	
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
@@ -459,7 +459,6 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		if (solouno == false) {
 			App->audio->PlayFx(dead_fx);
 		}
-		App->audio->CleanUp();
 		solouno = true;
 		muerto = true;
 	}

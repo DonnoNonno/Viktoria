@@ -24,6 +24,9 @@ public:
 	SDL_Texture* air;
 	SDL_Texture* ventilador;
 
+	//Fx
+	uint flipper_fx;
+
 	int countvel;
 	float velshot = 1.0f;
 };

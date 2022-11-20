@@ -90,6 +90,7 @@ public:
 	// Music & FX
 	uint music;
 	uint dead_fx;
+	uint point_fx;
 
 	// Raycast
 	p2Point<int> ray;

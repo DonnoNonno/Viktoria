@@ -4,6 +4,7 @@
 #include "ModulePhysics.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"
+#include "ModuleAudio.h"
 #include "ModuleTextures.h"
 #include "ModuleSceneIntro.h"
 
@@ -18,14 +19,19 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+	
 	//Texturas
 	balltex = App->textures->Load("pinball/ball.png");
 	ventilador = App->textures->Load("pinball/ventilador.png");
 	air = App->textures->Load("pinball/air.png");
 
+	//Ball
 	ball = (App->physics->CreateCircle(480, 560, 8, DYNAMIC));
 	ball->ctype = ColliderType::BALL;
-	
+
+	//Fx
+	flipper_fx = App->audio->LoadFx("pinball/Audios/flipper_fx.wav");
+
 	return true;
 }
 
@@ -58,15 +64,22 @@ update_status ModulePlayer::Update()
 		}
 
 		//Palancas
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+			App->audio->PlayFx(flipper_fx);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 			App->scene_intro->palancaleft->body->ApplyTorque(-40.0f, true);
-		else
+		}
+		else {
 			App->scene_intro->palancaleft->body->ApplyTorque(5.0f, true);
+		}
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 			App->scene_intro->palancaright->body->ApplyTorque(40.0f, true);
-		else
+		}
+		else {
 			App->scene_intro->palancaright->body->ApplyTorque(-5.0f, true);
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
