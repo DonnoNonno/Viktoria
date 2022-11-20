@@ -38,12 +38,11 @@ bool ModuleSceneIntro::Start()
 	bounce = App->textures->Load("pinball/bounce.png");
 	palancalefttex = App->textures->Load("pinball/palancaleft.png");
 	palancarighttex = App->textures->Load("pinball/palancaright.png");
-	wood= App->textures->Load("pinball/wood.png");
 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	//Load sounds
-	music = App->audio->LoadFx("pinball/Audios/music.ogg");
+	music = App->audio->LoadFx("pinball/Audios/music-.ogg");
 	dead_fx = App->audio->LoadFx("pinball/Audios/lose_sound.wav");
 
 	// Create a big red sensor on the bottom of the screen.
@@ -195,7 +194,6 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(point, 349, 190);
 	App->renderer->Blit(point, 167, 190);
 	App->renderer->Blit(bounce, 177, 390);
-	App->renderer->Blit(wood, 0, 624);
 	
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT) {
 		titlescene = false;

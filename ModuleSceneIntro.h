@@ -84,7 +84,6 @@ public:
 	SDL_Texture* bounce;
 	SDL_Texture* point;
 	SDL_Texture* mapa;
-	SDL_Texture* wood;
 	//SDL_Texture* box;
 	//SDL_Texture* rick;
 
