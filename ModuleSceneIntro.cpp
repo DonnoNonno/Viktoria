@@ -457,9 +457,11 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}*/
 
 	if (bodyB == s1) {
+		App->audio->Init();
 		if (solouno == false) {
 			App->audio->PlayFx(dead_fx);
 		}
+		App->audio->CleanUp();
 		solouno = true;
 		muerto = true;
 	}
