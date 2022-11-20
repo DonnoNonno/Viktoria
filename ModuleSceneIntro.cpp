@@ -85,6 +85,7 @@ bool ModuleSceneIntro::Start()
 
 	//Colliders
 	PhysBody* c1 = App->physics->CreateRectangle(SCREEN_WIDTH / 2, 690, SCREEN_WIDTH, 130, STATIC);
+	c1->ctype = ColliderType::LOSE;
 	PhysBody* c2 = App->physics->CreateRectangle(71, 325, 10, 600, STATIC);
 	PhysBody* c3 = App->physics->CreateRectangle(497, 325, 10, 600, STATIC);
 	PhysBody* c4 = App->physics->CreateRectangle(462, 440, 9, 370, STATIC);
@@ -417,8 +418,21 @@ void ModuleSceneIntro::Coll_Map() {
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+
 	// Play Audio FX on every collision, regardless of who is colliding
 	//App->audio->PlayFx(bonus_fx);
+	switch (bodyA->ctype)
+	{
+		case ColliderType::LOSE:
+			App->textures->Unload(balltex);
+			break;
+
+
+
+
+
+
+	}
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 }
