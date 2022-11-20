@@ -12,7 +12,6 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 	// Initialise all the internal class variables, at least to NULL pointer
 	mapa = circle = NULL;
-	ray_on = false;
 	//sensed = false;
 }
 
@@ -172,7 +171,7 @@ update_status ModuleSceneIntro::Update()
 
 	// Total distance of the raycast reference segment
 	int ray_hit = ray.DistanceTo(mouse);
-
+	
 	// Declare a vector. We will draw the normal to the hit surface (if we hit something)
 	fVector normal(0.0f, 0.0f);
 
@@ -264,6 +263,8 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
+
+	
 
 	// Keep playing
 	return UPDATE_CONTINUE;

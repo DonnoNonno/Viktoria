@@ -28,7 +28,6 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
-
 	
 };
 
@@ -37,6 +36,16 @@ enum bodyType {
 	STATIC,
 	KINEMATIC
 };
+
+enum class ColliderType {
+	BALL,
+	BOUNCE,
+	NORMAL,
+	POINTS,
+	LOSE
+	// ..
+};
+
 
 // Module --------------------------------------
 class ModulePhysics : public Module, public b2ContactListener // TODO
