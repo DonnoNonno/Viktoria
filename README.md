@@ -27,3 +27,11 @@ Pinball game for the physics subject.
  - Rafael Esquius Pérez
  - Pau Garriga Brotons
  - Joel Romero Botella
+
+## Solved Bugs
+ - The ball sometimes went through the flippers.
+   Solution --> - Increasing the size of the collider a bit.
+                - Adjusting the speed at which the flippers travel so that it does not coincide when the ball goes through the flipper.
+ 
+ - Memory Leak with chains. The chains did not stop creating infinitely.
+   Solution --> - Creating a function that prints all chains once.
