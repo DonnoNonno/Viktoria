@@ -35,6 +35,9 @@ bool ModuleSceneIntro::Start()
 
 	// Load textures
 	mapa = App->textures->Load("pinball/mapa.png");
+	puntuation=App->textures->Load("pinball/puntuation.png");
+	maderita = App->textures->Load("pinball/maderita.png");
+	barrapuntos = App->textures->Load("pinball/barrapuntos.png");
 	point = App->textures->Load("pinball/point.png");
 	bounce = App->textures->Load("pinball/bounce.png");
 	palancalefttex = App->textures->Load("pinball/palancaleft.png");
@@ -190,6 +193,9 @@ update_status ModuleSceneIntro::Update()
 	// All draw functions ------------------------------------------------------
 
 	App->renderer->Blit(mapa, 0, 0);
+	App->renderer->Blit(puntuation, 116, 623);
+	App->renderer->Blit(barrapuntos, -298, 726);
+	App->renderer->Blit(maderita, 0, 714);
 	App->renderer->Blit(point, 167, 110);
 	App->renderer->Blit(point, 227, 110);
 	App->renderer->Blit(point, 289, 110);

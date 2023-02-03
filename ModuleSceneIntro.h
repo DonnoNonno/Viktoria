@@ -85,6 +85,9 @@ public:
 	SDL_Texture* bounce;
 	SDL_Texture* point;
 	SDL_Texture* mapa;
+	SDL_Texture* puntuation;
+	SDL_Texture* maderita;
+	SDL_Texture* barrapuntos;
 	//SDL_Texture* box;
 	//SDL_Texture* rick;
 
@@ -100,4 +103,6 @@ public:
 	// Variables de condición muerte
 	bool solouno = false;
 	bool muerto = false;
+
+	int puntos = 0;
 };
