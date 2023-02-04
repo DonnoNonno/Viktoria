@@ -544,22 +544,22 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 
 	if (sumar == false) {
-		if (App->player->ball == c27) {
+		if (bodyB == c27) {
 			sumar = true;
 		}
-		if (App->player->ball == c28) {
+		if (bodyB == c28) {
 			sumar = true;
 		}
-		if (App->player->ball == c29) {
+		if (bodyB == c29) {
 			sumar = true;
 		}
-		if (App->player->ball == c30) {
+		if (bodyB == c30) {
 			sumar = true;
 		}
-		if (App->player->ball == c31) {
+		if (bodyB == c31) {
 			sumar = true;
 		}
-		if (App->player->ball == c32) {
+		if (bodyB == c32) {
 			sumar = true;
 		}
 	}
