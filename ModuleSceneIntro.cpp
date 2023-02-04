@@ -32,6 +32,7 @@ bool ModuleSceneIntro::Start()
 	//Load scenes
 	title = App->textures->Load("pinball/titlescreen.png");
 	losescreen = App->textures->Load("pinball/losescreen.png");
+	winscreen = App->textures->Load("pinball/winscreen.png");
 
 	// Load textures
 	mapa = App->textures->Load("pinball/mapa.png");
@@ -122,11 +123,24 @@ bool ModuleSceneIntro::Start()
 
 	//Points ball
 	c27 = App->physics->CreateCircleBounce(185, 128, 12, STATIC);
+	c27->ctype = ColliderType::POINTS;
+	c27->listener = this;
 	c28 = App->physics->CreateCircleBounce(244, 128, 12, STATIC);
+	c28->ctype = ColliderType::POINTS;
+	c28->listener = this;
 	c29 = App->physics->CreateCircleBounce(307, 128, 12, STATIC);
+	c29->ctype = ColliderType::POINTS;
+	c29->listener = this;
 	c30 = App->physics->CreateCircleBounce(368, 128, 12, STATIC);
+	c30->ctype = ColliderType::POINTS;
+	c30->listener = this;
 	c31 = App->physics->CreateCircleBounce(185, 209, 12, STATIC);
+	c31->ctype = ColliderType::POINTS;
+	c31->listener = this;
 	c32 = App->physics->CreateCircleBounce(368, 209, 12, STATIC);
+	c32->ctype = ColliderType::POINTS;
+	c32->listener = this;
+
 
 	//Inicia otras colisiones
 	Coll_Map();
@@ -143,6 +157,14 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		sumar = true;
+	}
+	
+	if (sumar == true) {
+		puntos = puntos + 100;
+		sumar = false;
+	}
 	//// If user presses SPACE, enable RayCast
 	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	//{
@@ -194,8 +216,6 @@ update_status ModuleSceneIntro::Update()
 
 	App->renderer->Blit(mapa, 0, 0);
 	App->renderer->Blit(puntuation, 116, 623);
-	App->renderer->Blit(barrapuntos, -298, 726);
-	App->renderer->Blit(maderita, 0, 714);
 	App->renderer->Blit(point, 167, 110);
 	App->renderer->Blit(point, 227, 110);
 	App->renderer->Blit(point, 289, 110);
@@ -203,7 +223,44 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(point, 349, 190);
 	App->renderer->Blit(point, 167, 190);
 	App->renderer->Blit(bounce, 177, 390);
+
+	if (puntos == 0) {
+		App->renderer->Blit(barrapuntos, -298, 726);
+	}
+	if (puntos == 100) {
+		App->renderer->Blit(barrapuntos, -285, 726);
+	}
+	if (puntos == 200) {
+		App->renderer->Blit(barrapuntos, -250, 726);
+	}
+	if (puntos == 300) {
+		App->renderer->Blit(barrapuntos, -215, 726);
+	}
+	if (puntos == 400) {
+		App->renderer->Blit(barrapuntos, -174, 726);
+	}
+	if (puntos == 500) {
+		App->renderer->Blit(barrapuntos, -139, 726);
+	}
+	if (puntos == 600) {
+		App->renderer->Blit(barrapuntos, -100, 726);
+	}
+	if (puntos == 700) {
+		App->renderer->Blit(barrapuntos, -60, 726);
+	}
+	if (puntos == 800) {
+		App->renderer->Blit(barrapuntos, -25, 726);
+	}
+	if (puntos == 900) {
+		App->renderer->Blit(barrapuntos, 10, 726);
+	}
+	if (puntos >= 1000) {
+		App->renderer->Blit(barrapuntos, 45, 726);
+		win = true;
+	}
 	
+	App->renderer->Blit(maderita, 0, 714);
+
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT) {
 		titlescene = false;
 	}
@@ -230,6 +287,14 @@ update_status ModuleSceneIntro::Update()
 	if (muerto) {
 		App->renderer->Blit(losescreen, 0, 0);
 		//music = NULL;
+	}
+	if (win == true) {
+		App->renderer->Blit(winscreen, 0, 0);
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			SDL_DestroyTexture(winscreen);
+			win = false;
+			puntos = 0;
+		}
 	}
 	/*App->renderer->Blit(palancalefttex, 220, 523);
 	App->renderer->Blit(palancarighttex, 290, 523);*/
@@ -446,7 +511,7 @@ void ModuleSceneIntro::Coll_Map() {
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-
+	
 	// Play Audio FX on every collision, regardless of who is colliding
 	//App->audio->PlayFx(bonus_fx);
 	/*switch (bodyB->ctype)
@@ -464,17 +529,46 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}*/
 
 	if (bodyB == s1) {
+		losescreen = App->textures->Load("pinball/losescreen.png");
 		App->audio->Init();
 		if (solouno == false) {
 			App->audio->PlayFx(dead_fx);
 		}
 		solouno = true;
 		muerto = true;
+		puntos = 0;
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			SDL_DestroyTexture(losescreen);
+			muerto = false;
+		}
 	}
+
+	if (sumar == false) {
+		if (App->player->ball == c27) {
+			sumar = true;
+		}
+		if (App->player->ball == c28) {
+			sumar = true;
+		}
+		if (App->player->ball == c29) {
+			sumar = true;
+		}
+		if (App->player->ball == c30) {
+			sumar = true;
+		}
+		if (App->player->ball == c31) {
+			sumar = true;
+		}
+		if (App->player->ball == c32) {
+			sumar = true;
+		}
+	}
+	
 
 	if (bodyB == inicio) {
 		App->player->soplar = true;
 	}
+
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 }

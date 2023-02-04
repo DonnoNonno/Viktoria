@@ -78,6 +78,7 @@ public:
 	SDL_Texture* title;
 	bool titlescene = true;
 	SDL_Texture* losescreen;
+	SDL_Texture* winscreen;
 
 	//Textures
 	SDL_Texture* palancarighttex;
@@ -103,6 +104,9 @@ public:
 	// Variables de condición muerte
 	bool solouno = false;
 	bool muerto = false;
+	bool win = false;
+
+	bool sumar = false;
 
 	int puntos = 0;
 };
