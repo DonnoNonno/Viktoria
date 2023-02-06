@@ -5,6 +5,7 @@
 #include "ModulePhysics.h"
 #include "p2Point.h"
 #include "math.h"
+#include "ModuleSceneIntro.h"
 
 // Tell the compiler to reference the compiled Box2D libraries
 #ifdef _DEBUG
