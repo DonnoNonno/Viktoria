@@ -164,7 +164,7 @@ update_status ModuleSceneIntro::Update()
 	if (sumar == true) {
 		puntos = puntos + 100;
 		sumar = false;
-		timer = 300;
+		timer = 150;
 	}
 	if (sumar == false && timer > 0) {
 		timer--;

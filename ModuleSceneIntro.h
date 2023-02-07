@@ -116,5 +116,5 @@ public:
 
 	int puntos = 0;
 
-	int timer = 300;
+	int timer = 150;
 };
