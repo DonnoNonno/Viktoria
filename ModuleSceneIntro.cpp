@@ -123,23 +123,23 @@ bool ModuleSceneIntro::Start()
 
 	//Points ball
 	c27 = App->physics->CreateCircleBounce(185, 128, 12, STATIC);
-	c27->ctype = ColliderType::POINTS;
-	c27->listener = this;
+	cb1 = App->physics->CreateRectangleSensor(185, 128, 24, 24);
+	cb1->listener = this;
 	c28 = App->physics->CreateCircleBounce(244, 128, 12, STATIC);
-	c28->ctype = ColliderType::POINTS;
-	c28->listener = this;
+	cb2 = App->physics->CreateRectangleSensor(244, 128, 24, 24);
+	cb2->listener = this;
 	c29 = App->physics->CreateCircleBounce(307, 128, 12, STATIC);
-	c29->ctype = ColliderType::POINTS;
-	c29->listener = this;
+	cb3 = App->physics->CreateRectangleSensor(307, 128, 24, 24);
+	cb3->listener = this;
 	c30 = App->physics->CreateCircleBounce(368, 128, 12, STATIC);
-	c30->ctype = ColliderType::POINTS;
-	c30->listener = this;
+	cb4 = App->physics->CreateRectangleSensor(368, 128, 24, 24);
+	cb4->listener = this;
 	c31 = App->physics->CreateCircleBounce(185, 209, 12, STATIC);
-	c31->ctype = ColliderType::POINTS;
-	c31->listener = this;
+	cb5 = App->physics->CreateRectangleSensor(185, 209, 24, 24);
+	cb5->listener = this;
 	c32 = App->physics->CreateCircleBounce(368, 209, 12, STATIC);
-	c32->ctype = ColliderType::POINTS;
-	c32->listener = this;
+	cb6 = App->physics->CreateRectangleSensor(368, 209, 24, 24);
+	cb6->listener = this;
 
 
 	//Inicia otras colisiones
@@ -164,6 +164,10 @@ update_status ModuleSceneIntro::Update()
 	if (sumar == true) {
 		puntos = puntos + 100;
 		sumar = false;
+		timer = 300;
+	}
+	if (sumar == false && timer > 0) {
+		timer--;
 	}
 	//// If user presses SPACE, enable RayCast
 	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -553,13 +557,27 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 	}
 
-	if (sumar == false) {
-		if (bodyB->ctype==ColliderType::POINTS) {
+	if (sumar == false && timer <= 50) {
+		if (bodyA == cb1) {
+			sumar = true;
+		}
+		if (bodyA == cb2) {
+			sumar = true;
+		}
+		if (bodyA == cb3) {
+			sumar = true;
+		}
+		if (bodyA == cb4) {
+			sumar = true;
+		}
+		if (bodyA == cb5) {
+			sumar = true;
+		}
+		if (bodyA == cb6) {
 			sumar = true;
 		}
 	}
 	
-
 	if (bodyB == inicio) {
 		App->player->soplar = true;
 	}

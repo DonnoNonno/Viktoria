@@ -69,6 +69,12 @@ public:
 	PhysBody* c32;
 	PhysBody* c33;
 	PhysBody* inicio;
+	PhysBody* cb1;
+	PhysBody* cb2;
+	PhysBody* cb3;
+	PhysBody* cb4;
+	PhysBody* cb5;
+	PhysBody* cb6;
 
 	// Lower ground sensor (will kill all objects passig through it)
 	/*PhysBody* lower_ground_sensor;
@@ -109,4 +115,6 @@ public:
 	bool sumar = false;
 
 	int puntos = 0;
+
+	int timer = 300;
 };

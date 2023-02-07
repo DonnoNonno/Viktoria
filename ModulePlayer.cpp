@@ -13,7 +13,9 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 }
 
 ModulePlayer::~ModulePlayer()
-{}
+{
+
+}
 
 // Load assets
 bool ModulePlayer::Start()
