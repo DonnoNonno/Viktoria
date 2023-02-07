@@ -289,9 +289,18 @@ update_status ModuleSceneIntro::Update()
 		//music = NULL;
 	}
 	if (win == true) {
+		SDL_DestroyTexture(App->player->balltex);
+		SDL_DestroyTexture(App->player->ventilador);
 		App->renderer->Blit(winscreen, 0, 0);
+		App->player->ball->body->SetTransform(b2Vec2(9.6f, 11), 0);
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			SDL_DestroyTexture(winscreen);
+			App->player->balltex = App->textures->Load("pinball/ball.png");
+			App->player->ventilador = App->textures->Load("pinball/ventilador.png");
+			App->renderer->Blit(App->player->ventilador, 466, 610);
+			int x, y;
+			App->player->ball->GetPosition(x, y);
+			App->renderer->Blit(App->player->balltex, x, y, NULL, App->player->velshot, App->player->ball->GetRotation());
 			win = false;
 			puntos = 0;
 		}
@@ -538,28 +547,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		muerto = true;
 		puntos = 0;
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			App->player->ball->body->SetTransform(b2Vec2(9.6f, 11), 0);
 			SDL_DestroyTexture(losescreen);
 			muerto = false;
 		}
 	}
 
 	if (sumar == false) {
-		if (bodyB == c27) {
-			sumar = true;
-		}
-		if (bodyB == c28) {
-			sumar = true;
-		}
-		if (bodyB == c29) {
-			sumar = true;
-		}
-		if (bodyB == c30) {
-			sumar = true;
-		}
-		if (bodyB == c31) {
-			sumar = true;
-		}
-		if (bodyB == c32) {
+		if (bodyB->ctype==ColliderType::POINTS) {
 			sumar = true;
 		}
 	}
