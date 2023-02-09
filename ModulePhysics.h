@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Box2D/Box2D/Box2D.h"
+#include "Timer.h"
+#include "PerfTimer.h"
 
 #define GRAVITY_X 0.0f
 #define GRAVITY_Y -7.0f
@@ -82,7 +84,27 @@ public:
 	// Box2D World
 	b2World* world;
 
+	float dt;
+	uint frames;
+
 private:
+
+	//FPS
+	Timer timer;
+	PerfTimer ptimer;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+	uint32 framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	float secondsSinceStartup = 0.0f;
+
+	float maxFrameDuration = 0;
 
 	// Debug mode
 	bool debug;

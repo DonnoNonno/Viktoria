@@ -21,6 +21,7 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 	ground = NULL;
 	mouse_joint = NULL;
 	mouse_body = NULL;
+	frames = 0;
 	debug = false;
 }
 
@@ -33,6 +34,13 @@ ModulePhysics::~ModulePhysics()
 bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
+
+	//Delta Time
+	timer = Timer();
+	maxFrameDuration = 16;
+	timer.Start();
+	startupTime.Start();
+	lastSecFrameTime.Start();
 
 	// Create a new World
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
@@ -54,8 +62,16 @@ bool ModulePhysics::Start()
 
 update_status ModulePhysics::PreUpdate()
 {
+	//Delta Time
+	frameTime.Start();
+	
 	// Step (update) the World
+<<<<<<< Updated upstream
 	world->Step(1.0f / 60.0f, 6, 2);
+=======
+	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
+	world->Step(maxFrameDuration / 1000, 6, 2);
+>>>>>>> Stashed changes
 
 	// Because Box2D does not automatically broadcast collisions/contacts with sensors, 
 	// we have to manually search for collisions and "call" the equivalent to the ModulePhysics::BeginContact() ourselves...
@@ -210,6 +226,63 @@ update_status ModulePhysics::PostUpdate()
 			mouse_body = nullptr;
 		}
 	}
+
+	//Delta Time
+	// 
+	// Amount of frames since startup
+
+	frameCount++;
+
+	// Amount of time since game start (use a low resolution timer)
+
+	secondsSinceStartup = startupTime.ReadSec();
+
+	// Amount of ms took the last update
+
+	dt = frameTime.ReadMSec();
+
+	// Amount of frames during the last second
+
+	lastSecFrameCount++;
+
+	if (lastSecFrameTime.ReadMSec() > 1000) {
+
+		lastSecFrameTime.Start();
+
+		framesPerSecond = lastSecFrameCount;
+
+		lastSecFrameCount = 0;
+
+		// Average FPS for the whole game life
+
+		averageFps = (averageFps + framesPerSecond) / 2;
+
+	}
+
+	float delay = float(maxFrameDuration) - dt;
+
+	PerfTimer delayTimer = PerfTimer();
+
+	delayTimer.Start();
+
+	if (maxFrameDuration > 0 && delay > 0) {
+
+		SDL_Delay(delay);
+
+		LOG("We waited for %f milliseconds and the real delay is % f", delay, delayTimer.ReadMs());
+
+		dt = maxFrameDuration;
+
+	}
+
+	// Shows the time measurements in the window title
+
+	static char title[100];
+
+	sprintf_s(title, 100, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+
+	App->window->SetTitle(title);
 
 	// Keep playing
 	return UPDATE_CONTINUE;

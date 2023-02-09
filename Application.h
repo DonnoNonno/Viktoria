@@ -2,16 +2,15 @@
 
 #include "p2List.h"
 #include "Globals.h"
-
-class Module;
-class ModuleRender;
-class ModuleWindow;
-class ModuleTextures;
-class ModuleInput;
-class ModuleAudio;
-class ModulePlayer;
-class ModuleSceneIntro;
-class ModulePhysics;
+#include "Module.h"
+#include "ModuleWindow.h"
+#include "ModuleRender.h"
+#include "ModuleTextures.h"
+#include "ModuleInput.h"
+#include "ModuleAudio.h"
+#include "ModulePlayer.h"
+#include "ModulePhysics.h"
+#include "ModuleSceneIntro.h"
 
 class Application
 {
