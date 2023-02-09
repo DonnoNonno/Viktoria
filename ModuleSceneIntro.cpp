@@ -157,9 +157,6 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		sumar = true;
-	}
 	
 	if (sumar == true) {
 		puntos = puntos + 100;
