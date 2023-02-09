@@ -84,10 +84,11 @@ public:
 	// Box2D World
 	b2World* world;
 
-	float dt;
-	uint frames;
 
 private:
+
+	float dt;
+	uint frames;
 
 	//FPS
 	Timer timer;
