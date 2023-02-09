@@ -62,6 +62,7 @@ bool ModulePhysics::Start()
 
 update_status ModulePhysics::PreUpdate()
 {
+
 	//Delta Time
 	frameTime.Start();
 
@@ -90,6 +91,7 @@ update_status ModulePhysics::PreUpdate()
 
 update_status ModulePhysics::PostUpdate()
 {
+	
 	// Activate or deactivate debug mode
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
