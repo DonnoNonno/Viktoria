@@ -50,6 +50,7 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {
 	if (!App->scene_intro->titlescene && !App->scene_intro->muerto) {
+		
 		//Ball
 		if (ball != NULL) {
 			int x, y;

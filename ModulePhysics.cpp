@@ -55,7 +55,6 @@ bool ModulePhysics::Start()
 update_status ModulePhysics::PreUpdate()
 {
 	// Step (update) the World
-	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
 	world->Step(1.0f / 60.0f, 6, 2);
 
 	// Because Box2D does not automatically broadcast collisions/contacts with sensors, 
@@ -87,8 +86,6 @@ update_status ModulePhysics::PostUpdate()
 	if(!debug)
 		return UPDATE_CONTINUE;
 
-	// Bonus code: this will iterate all objects in the world and draw the circles
-	// You need to provide your own macro to translate meters to pixels
 	for(b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
 		for(b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
@@ -157,26 +154,11 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
 			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				// test if the current body contains mouse position
 				b2Vec2 p = { PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()) };
 				if (f->GetShape()->TestPoint(b->GetTransform(), p) == true)
 				{
-
-					// If a body was selected we will attach a mouse joint to it
-					// so we can pull it around
-
-					// TODO 2: If a body was selected, create a mouse joint
-					// using mouse_joint class property
-
-					// NOTE: you do TODO2 here or also in the original handout's location. 
-					// It doesn't matter unless you are triggering several objects at once;
-					// I leave it to you to add safety checks to avoid re-defining several mouse joints.
-
-					// The variable "b2Body* mouse_body;" is defined in the header ModulePhysics.h 
 					// We need to keep this body throughout several game frames; you cannot define it as a local variable here. 
 					mouse_body = b;
 
@@ -201,10 +183,7 @@ update_status ModulePhysics::PostUpdate()
 		}
 	}
 
-
-
-	// TODO 3: If the player keeps pressing the mouse button, update
-	// target position and draw a red line between both anchor points
+	// Update target position and draw a red line between both anchor points
 	if (mouse_body != nullptr && mouse_joint != nullptr)
 	{
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
@@ -220,15 +199,13 @@ update_status ModulePhysics::PostUpdate()
 		}
 	}
 
-	// TODO 4: If the player releases the mouse button, destroy the joint
+	// If the player releases the mouse button, destroy the joint
 	if (mouse_body != nullptr && mouse_joint != nullptr)
 	{
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
 		{
 			// Tell Box2D to destroy the mouse_joint
 			world->DestroyJoint(mouse_joint);
-
-			// DO NOT FORGET THIS! We need it for the "if (mouse_body != nullptr && mouse_joint != nullptr)"
 			mouse_joint = nullptr; 
 			mouse_body = nullptr;
 		}
@@ -505,7 +482,6 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 
 // PHYS BODY FUNCTIONS -------------------------------------------------------------------------------
-
 PhysBody::PhysBody() : listener(NULL), body(NULL)
 {
 	// Initialize all internal class variables
@@ -565,8 +541,6 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	{
 		if(fixture->GetShape()->RayCast(&output, input, body->GetTransform(), 0) == true)
 		{
-			// do we want the normal ?
-
 			float fx = x2 - x1;
 			float fy = y2 - y1;
 			float dist = sqrtf((fx*fx) + (fy*fy));
@@ -578,6 +552,5 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 		}
 		fixture = fixture->GetNext();
 	}
-
 	return ret;
 }

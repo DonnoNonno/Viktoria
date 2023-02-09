@@ -10,15 +10,13 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-
 	// Initialise all the internal class variables, at least to NULL pointer
 	mapa = NULL;
-	//sensed = false;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
 {
-	// You should do some memory cleaning here, if required
+	
 }
 
 bool ModuleSceneIntro::Start()
@@ -44,22 +42,8 @@ bool ModuleSceneIntro::Start()
 	palancalefttex = App->textures->Load("pinball/palancaleft.png");
 	palancarighttex = App->textures->Load("pinball/palancaright.png");
 
-	//box = App->textures->Load("pinball/crate.png");
-	//rick = App->textures->Load("pinball/rick_head.png");
 	//Load sounds
-	//music = App->audio->LoadFx("pinball/Audios/music-.ogg");
 	dead_fx = App->audio->LoadFx("pinball/Audios/lose_sound.wav");
-
-	// Create a big red sensor on the bottom of the screen.
-	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
-	//lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
-
-	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
-	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
-	//lower_ground_sensor->listener = this;
-
-	//Start Ball
-	//circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
 
 	//Plancas Joints
 	b2RevoluteJointDef jointdef_palancaleft;
@@ -141,7 +125,6 @@ bool ModuleSceneIntro::Start()
 	cb6 = App->physics->CreateRectangleSensor(368, 209, 24, 24);
 	cb6->listener = this;
 
-
 	//Inicia otras colisiones
 	Coll_Map();
 
@@ -157,6 +140,9 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		sumar = true;
+	}
 	
 	if (sumar == true) {
 		puntos = puntos + 100;
@@ -166,41 +152,6 @@ update_status ModuleSceneIntro::Update()
 	if (sumar == false && timer > 0) {
 		timer--;
 	}
-	//// If user presses SPACE, enable RayCast
-	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	//{
-	//	// Enable raycast mode
-	//	ray_on = !ray_on;
-
-	//	// Origin point of the raycast is be the mouse current position now (will not change)
-	//	ray.x = App->input->GetMouseX();
-	//	ray.y = App->input->GetMouseY();
-	//}
-
-	// If user presses 1, create a new circle object
-	/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8, DYNAMIC));
-		circles.getLast()->data->listener = this;
-	}*/
-
-	//if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	//{
-	//	circles.add(App->physics->CreateCircle(480, 560, 8, DYNAMIC));
-
-	//	// Add this module (ModuleSceneIntro) as a "listener" interested in collisions with circles.
-	//	// If Box2D detects a collision with this last generated circle, it will automatically callback the function ModulePhysics::BeginContact()
-	//	circles.getLast()->data->listener = this;
-	//}
-
-	//	ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
-	//}
-
-	// Prepare for raycast ------------------------------------------------------
-	
-	//Music update
-	/*if (!muerto && !titlescene) {
-		App->audio->PlayFx(music);
-	}*/
 	
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
@@ -215,6 +166,7 @@ update_status ModuleSceneIntro::Update()
 
 	// All draw functions ------------------------------------------------------
 
+	//Points
 	App->renderer->Blit(mapa, 0, 0);
 	App->renderer->Blit(puntuation, 116, 623);
 	App->renderer->Blit(point, 167, 110);
@@ -262,6 +214,7 @@ update_status ModuleSceneIntro::Update()
 	
 	App->renderer->Blit(maderita, 0, 714);
 
+	// Scene conditions
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT) {
 		titlescene = false;
 	}
@@ -287,8 +240,8 @@ update_status ModuleSceneIntro::Update()
 
 	if (muerto) {
 		App->renderer->Blit(losescreen, 0, 0);
-		//music = NULL;
 	}
+
 	if (win == true) {
 		SDL_DestroyTexture(App->player->balltex);
 		SDL_DestroyTexture(App->player->ventilador);
@@ -306,61 +259,6 @@ update_status ModuleSceneIntro::Update()
 			puntos = 0;
 		}
 	}
-	/*App->renderer->Blit(palancalefttex, 220, 523);
-	App->renderer->Blit(palancarighttex, 290, 523);*/
-
-	// Circles
-	//p2List_item<PhysBody*>* c = circles.getFirst();
-	//while(c != NULL)
-	//{
-	//	int x, y;
-	//	c->data->GetPosition(x, y);
-
-	//	// If mouse is over this circle, paint the circle's texture
-	//	
-	//	App->renderer->Blit(balltex, x, y, NULL, 1.0f, c->data->GetRotation());
-
-	//	c = c->next;
-	//}
-
-	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
-	{
-		b2Vec2 impulse = b2Vec2(0.0f, -1.0f);
-
-		b2Vec2 point = circles->body->GetLocalCenter();
-		circles->body->ApplyLinearImpulse(impulse, point, true);
-	}*/
-
-	//// Boxes
-	//c = boxes.getFirst();
-	//while(c != NULL)
-	//{
-	//	int x, y;
-	//	c->data->GetPosition(x, y);
-
-	//	// Always paint boxes texture
-	//	App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-
-	//	// Are we hitting this box with the raycast?
-	//	if(ray_on)
-	//	{
-	//		// Test raycast over the box, return fraction and normal vector
-	//		int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-	//		if(hit >= 0)
-	//			ray_hit = hit;
-	//	}
-	//	c = c->next;
-	//}
-
-	//// Rick Heads
-	//c = ricks.getFirst();
-	//while(c != NULL)
-	//{
-	//	int x, y;
-	//	c->data->GetPosition(x, y);
-	//	App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-	//	c = c->next;
-	//}
 
 	// Raycasts -----------------
 	if(ray_on == true)
@@ -505,7 +403,6 @@ void ModuleSceneIntro::Coll_Map() {
 	botibotis.add(App->physics->CreateChainBumper(345, 425, boing01, 18));
 	botibotis.add(App->physics->CreateChainBumper(209, 425, boing02, 18));
 	
-
 	chains.add(App->physics->CreateChain(130, 470, diagonal01, 8));
 	chains.add(App->physics->CreateChain(422, 470, diagonal02, 8));
 	chains.add(App->physics->CreateChain(166, 439, diagonal03, 8));
@@ -521,23 +418,7 @@ void ModuleSceneIntro::Coll_Map() {
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	
-	// Play Audio FX on every collision, regardless of who is colliding
-	//App->audio->PlayFx(bonus_fx);
-	/*switch (bodyB->ctype)
-	{
-		case ColliderType::LOSE:
-			App->audio->PlayFx(App->audio->hit_ball);
-			App->textures->Unload(balltex);
-			break;
-	}*/
-	
-	LOG("Toydentro")
-
-	/*if (bodyB->ctype == ColliderType::BALL && bodyA->ctype == ColliderType::LOSE) {
-		App->audio->PlayFx(App->audio->hit_ball);
-	}*/
-
+	// Death collision
 	if (bodyB == s1) {
 		losescreen = App->textures->Load("pinball/losescreen.png");
 		App->audio->Init();
@@ -554,6 +435,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 	}
 
+	// Points collision
 	if (sumar == false && timer <= 50) {
 		if (bodyA == cb1) {
 			sumar = true;
@@ -575,10 +457,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 	}
 	
+	// Fan sensor
 	if (bodyB == inicio) {
 		App->player->soplar = true;
 	}
-
-
-	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 }

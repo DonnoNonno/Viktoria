@@ -76,10 +76,6 @@ public:
 	PhysBody* cb5;
 	PhysBody* cb6;
 
-	// Lower ground sensor (will kill all objects passig through it)
-	/*PhysBody* lower_ground_sensor;
-	bool sensed;*/
-
 	//Scenes
 	SDL_Texture* title;
 	bool titlescene = true;
@@ -95,11 +91,8 @@ public:
 	SDL_Texture* puntuation;
 	SDL_Texture* maderita;
 	SDL_Texture* barrapuntos;
-	//SDL_Texture* box;
-	//SDL_Texture* rick;
 
 	// Music & FX
-	//uint music;
 	uint dead_fx;
 	uint point_fx;
 
