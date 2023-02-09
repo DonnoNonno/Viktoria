@@ -66,12 +66,12 @@ update_status ModulePhysics::PreUpdate()
 	frameTime.Start();
 	
 	// Step (update) the World
-<<<<<<< Updated upstream
+
 	world->Step(1.0f / 60.0f, 6, 2);
-=======
+
 	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
 	world->Step(maxFrameDuration / 1000, 6, 2);
->>>>>>> Stashed changes
+
 
 	// Because Box2D does not automatically broadcast collisions/contacts with sensors, 
 	// we have to manually search for collisions and "call" the equivalent to the ModulePhysics::BeginContact() ourselves...
