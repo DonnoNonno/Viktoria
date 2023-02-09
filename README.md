@@ -8,9 +8,14 @@ Pinball game for the physics subject.
 **Github Link:** https://github.com/DonnoNonno/Viktoria
 
 ## Features
- - Title Scene & Dead Scene.
- - Bumpers do a bounce effect.
+
+ - Reach 1000 points to win.
+ - Player only have 1 life.
+ - Title, Dead & Win Scenes. Game loop available.
+ - Points bar.
+ - Bumpers.
  - Death and flippers have Fx.
+ - Game works in real time. (The information don't appear on screen)
 
 ## Controls
 
